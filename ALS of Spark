@@ -1,0 +1,10 @@
+Một số định nghĩa
+  - RatingBlock là một phần nhỏ của file rating (cũng là ma trận rating)
+    Mỗi một RatingBlock được xác định bởi một cặp số (srcBlockId, dstBlockId)
+    Một RatingBlock bao gồm 1 mảng các srcIds, một mảng các dstIds và một mảng ratings
+  - InBlock cũng là một phần của file rating, nhưng được xác định bởi srcBlockId
+    Một InBlock bao gồm:
+    + Một mảng các srcIds thuộc vào blockId đó: Các srcIds này là unique, các srcIds ban đầu được sắp xếp và chỉ chọn srcIds đầu tiên
+    + Chính vì chỉ chọn các srcIds đầu tiên sau khi được sắp xếp (thông thường rút gọn được rất nhiều lần), nên cần dstPtrs: với mỗi giá trị trong unique srcIds được lưu, lưu số thứ tự của nó trong srcIds gốc được sắp xếp
+    + chỉ số của dst được mã hóa (blockId + localIndex): dstEncodedIndices
+    + mảng các giá trị rating tương ứng
