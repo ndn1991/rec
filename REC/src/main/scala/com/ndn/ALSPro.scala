@@ -1,18 +1,17 @@
 package com.ndn
 
-import com.datastax.spark.connector.{toSparkContextFunctions, SomeColumns}
-import com.datastax.bdp.spark.DseSparkConfHelper._
+import com.datastax.spark.connector.{SomeColumns, toSparkContextFunctions}
+import com.ndn.spark.mlib.recommendation.{ALS1, Rating1}
 import com.ndn.tools.TopK
 import com.ndn.tools.Utils._
 import com.typesafe.config.ConfigFactory
-import org.apache.hadoop.conf.Configuration
-import org.apache.hadoop.fs.{Path, FileSystem}
 import org.apache.log4j.Logger
 import org.apache.spark.rdd.RDD
-import org.apache.spark.{SparkConf, SparkContext}
+import org.apache.spark.SparkContext
 import org.apache.spark.SparkContext._
-import org.apache.spark.mllib.recommendation.{MatrixFactorizationModel, ALS, Rating}
 import scala.collection.JavaConverters._
+import scala.collection.mutable
+import com.github.fommil.netlib.BLAS.{getInstance => blas}
 
 /**
  * Created by ndn on 3/7/2015.
@@ -20,7 +19,8 @@ import scala.collection.JavaConverters._
 object ALSPro {
   def main(args: Array[String]) {
     val start = System.currentTimeMillis
-    execute()
+    val sc = new SparkContext()
+    execute(sc)
     val finish = System.currentTimeMillis
     println("Total time: " + (finish - start))
   }
@@ -29,41 +29,47 @@ object ALSPro {
    * Tính toán các sản phẩm được recommend cho từng user
    * @return
    */
-  def getRecommend(rates: RDD[(Int, Int, Double)], rank: Int, numIterations: Int, lambda: Double, alpha: Double, k: Int) = {
-    val sc = rates.sparkContext
-
-    val ratings = rates.map { case (user, item, rate) => Rating(user, item, rate)}
+  def getRecommend(rates: RDD[Rating1], rank: Int, numIterations: Int, lambda: Double, alpha: Double, k: Int) = {
     val model = if (alpha > 0.0)
-      ALS.trainImplicit(ratings, rank, numIterations, lambda, alpha)
+      ALS1.trainImplicit(rates, rank, numIterations, lambda, 32, alpha)
     else
-      ALS.train(ratings, rank, numIterations, lambda)
+      ALS1.train(rates, rank, numIterations, 32)
 
-    val modelB = sc.broadcast(model)
-    val itemsB = sc.broadcast(rates.map(_._2).distinct().collect())
-
-    rates.map(v => (v._1, v._2))
-      .groupByKey()
-      .mapValues(_.toList)
-      .map(findKRecommendedItems(_, modelB.value, itemsB.value, k))
-  }
-
-  /**
-   * Tìm k item được recommend cho một user
-   * @param userItems user + list item mà user đã tương tác, danh sách này dùng để tránh việc gợi ý các sản phẩm mà user đó đã mua
-   * @param model model của phương pháp ALS
-   * @param items tập tất cả các item có trong hệ thống
-   * @param k số sản phẩm recommend
-   * @return k item được recommend cho user đó
-   */
-  private def findKRecommendedItems(userItems: (Int, List[Int]), model: MatrixFactorizationModel, items: Array[Int], k: Int) = {
-    val topK = new TopK[Long](k)
-    val ratedItems = userItems._2.toSet
-    val user = userItems._1
-    for (item <- items; if !ratedItems.contains(item)) {
-      val p = model.predict(user, item)
-      topK.put(item, p)
+    val itemBlocks = model.productFeatures.mapPartitionsWithIndex { case (idx, iter) =>
+      Iterator.single((1, iter.toArray))
     }
-    (user.toLong, topK.real)
+
+    val userBlocks = rates.map(v => (v.user, v.product))
+      .combineByKey(
+        (v: Long) => mutable.ArrayBuilder.make[Long].+=(v),
+        (set: mutable.ArrayBuilder[Long], v: Long) => set.+=(v),
+        (set1: mutable.ArrayBuilder[Long], set2: mutable.ArrayBuilder[Long]) => set1.++=(set2.result())
+      )
+      .mapValues(_.result().toSet)
+      .join(model.userFeatures)
+      .mapPartitionsWithIndex { case (idx, iter) => Iterator.single((1, (idx, iter.toArray)))}
+
+    userBlocks.join(itemBlocks)
+      .values
+      .map(v => (v._1._1, (v._1._2, v._2)))
+      .mapValues { case (userBlock, itemBlock) =>
+        userBlock.map { case (user, (ratedItems, userFactor)) =>
+          val topK = new TopK[Long](k)
+          itemBlock.filterNot(v => ratedItems.contains(v._1))
+            .foreach { case (item, itemFactor) =>
+            val p = blas.ddot(itemFactor.length, itemFactor, 1, userFactor, 1)
+            topK.put(item, p)
+          }
+          (user, topK)
+        }
+      }
+      .combineByKey(
+        (v: Array[(Long, TopK[Long])]) => v,
+        (_v: Array[(Long, TopK[Long])], v: Array[(Long, TopK[Long])]) => {_v.zip(v.map(_._2)).map{case ((user, topK1), topK2) => (user, topK1.put(topK2))}},
+        (_v1: Array[(Long, TopK[Long])], _v2: Array[(Long, TopK[Long])]) => {_v1.zip(_v2.map(_._2)).map{case ((user, topK1), topK2) => (user, topK1.put(topK2))}}
+      )
+      .flatMap(_._2)
+      .mapValues(_.real)
   }
 
   val conf = ConfigFactory.load()
@@ -78,23 +84,15 @@ object ALSPro {
   val cqlCreates = conf.getStringList("rec.cql.create.table.als").asScala.toList
   val logger = Logger.getLogger(this.getClass)
 
-  def execute(): Unit = {
+  def execute(sc: SparkContext): Unit = {
     logger.error(s"rumRec: $numRec, keySpace: $keySpace, table: $table, rank: $rank, numIterations: $numIterations, lambda: $lambda, alpha: $alpha, numRec: $numRec, resultTable: $resultTable")
     logger.error(s"cqlCreates: $cqlCreates")
-    val sc = new SparkContext(new SparkConf().forDse)
     val rows = sc.cassandraTable(keySpace, table)
-      .map(v => ((getInt(v.get[String]("user_id")), v.get[String]("product_id").toInt), v.get[String]("num_product").toDouble))
+      .map(v => ((getLong(v.get[String]("user_id")), v.get[String]("product_id").toLong), v.get[String]("num_product").toFloat))
       .reduceByKey(_ + _)
-    .map{ case ((user, item), product) => (user, item, product)}
-    .map(v => v._1 + "," + v._2 + "," + v._3)
-    val fs = FileSystem.get(new Configuration())
-    fs.delete(new Path("/root/data/tmp/rec"), true)
-    fs.close()
-    rows.saveAsTextFile("/root/data/tmp/rec")
-    val _rows = sc.textFile("/root/data/tmp/rec")
-      .map(_.split(",") match {case Array(user, item, rate) => (user.toInt, item.toInt, rate.toDouble)})
+      .map { case ((user, item), rate) => Rating1(user, item, rate)}
 
-    val recs = getRecommend(_rows, rank, numIterations, lambda, alpha, numRec)
+    val recs = getRecommend(rows, rank, numIterations, lambda, alpha, numRec)
     saveToCSD(recs, keySpace, resultTable, cqlCreates, SomeColumns("user", "items", "scores"))
   }
 }

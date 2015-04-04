@@ -135,7 +135,6 @@ object ItemNeighs {
   def execute(sc: SparkContext): Unit = {
     logger.error(s"keySpace: $keySpace, table: $table, simType: $simType, threshold: $threshold, numNeigh: $numNeigh, resultTable: $resultTable")
     logger.error(s"\ncqlCreates: $cqlCreates")
-    val sc = new SparkContext()
     val rows = sc.cassandraTable(keySpace, table)
       .map(v => ((getLong(v.get[String]("user_id")), v.get[Long]("product_id")), v.get[Double]("num_product")))
       .reduceByKey { case (v1, v2) => 1.0}

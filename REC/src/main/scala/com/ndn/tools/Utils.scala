@@ -6,10 +6,8 @@ import com.datastax.spark.connector.SomeColumns
 import com.datastax.spark.connector._
 import com.datastax.spark.connector.cql.CassandraConnector
 import com.ndn.XORShiftRandom
-import org.apache.spark.SparkContext
 import org.apache.spark.SparkContext._
 import org.apache.spark.rdd.RDD
-
 import scala.collection.mutable
 import scala.util.Random
 

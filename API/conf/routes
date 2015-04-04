@@ -7,7 +7,14 @@ GET        /                    controllers.Application.index
 
 # Map static resources from the /public folder to the /assets URL path
 GET        /assets/*file        controllers.Assets.at(path="/public", file)
+GET        /in                  controllers.Application.getItemNeighs(item: Long)
+GET        /ins                 controllers.Application.getItemNeighsWithScore(item: Long)
+GET        /ib                  controllers.Application.getRecItemsItemBase(user: Long)
+GET        /ibs                 controllers.Application.getRecItemsItemBaseWithScore(user: Long)
+GET        /als                 controllers.Application.getRecItemsALS(user: Long)
+GET        /alss                controllers.Application.getRecItemsALSWithScore(user: Long)
+GET        /childs              controllers.Application.getChildrenCate(cat: Int)
+GET        /ps                  controllers.Application.getProducts(ids: List[Int])
+GET        /sps                 controllers.Application.getShortProducts(cat: Int, index: Int)
+GET        /p                   controllers.Application.getProduct(p: Int)
 
-GET        /get                 controllers.Application.get(item: Long)
-
-GET        /get1              controllers.Application.get1(item: Long)
