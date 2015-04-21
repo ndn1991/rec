@@ -24,6 +24,8 @@ object Import {
   val pass = conf.getString("rec.sql.pass")
   val sql = conf.getString("rec.sql.query")
   val cqlInsertOrder = conf.getString("rec.cql.insert.order")
+  val cqlInsertOrderTest = conf.getString("rec.cql.insert.order_test")
+  val cqlInsertOrderTest1 = conf.getString("rec.cql.insert.order_test1")
   val cqlInsertUpdateTime = conf.getString("rec.cql.insert.updateTime")
   val cqlSelectUpdateTime = conf.getString("rec.cql.select.updateTime")
   val csdHosts = conf.getString("rec.cql.hosts").split(",")
@@ -33,6 +35,8 @@ object Import {
 
   session.execute(conf.getString("rec.cql.create.keySpace"))
   session.execute(conf.getString("rec.cql.create.table.orders"))
+  session.execute(conf.getString("rec.cql.create.table.orders_test"))
+  session.execute(conf.getString("rec.cql.create.table.orders_test1"))
   session.execute(conf.getString("rec.cql.create.table.params"))
 
   def execute(): Unit = {
@@ -75,6 +79,11 @@ object Import {
       count += 1
       val r = OrderRow(rs.getString("user_id"), rs.getLong("order_id"), rs.getInt("product_id"), rs.getInt("num_product"))
       try {
+        val s = cqlInsertOrderTest.format(s"[${r.numProduct}]", s"[${r.product}]", s"'${r.user}'", r.orderId)
+        session.execute(s)
+        val ss = cqlInsertOrderTest1.format(s"[${r.numProduct}]", s"[${r.product}]", s"[${r.orderId}]", s"'${r.user}'")
+//        println(ss)
+        session.execute(ss)
         session.execute(cqlInsertOrder, r.user, r.orderId, r.product, r.numProduct)
       }
       catch {
@@ -91,6 +100,9 @@ object Import {
       val r = failRows.dequeue()
       try {
         session.execute(cqlInsertOrder, r.user, r.orderId, r.product, r.numProduct)
+        val ss = cqlInsertOrderTest1.format(s"[${r.numProduct}]", s"[${r.product}]", s"[${r.orderId}]", s"'${r.user}'")
+        session.execute(ss)
+        session.execute(cqlInsertOrderTest.format(s"[${r.numProduct}}]", s"[${r.product}}]", s"'${r.user}'", r.orderId))
       }
       catch {
         case e: QueryExecutionException => failRows.enqueue(r)

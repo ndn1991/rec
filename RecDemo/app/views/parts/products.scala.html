@@ -1,0 +1,49 @@
+@(url: String)
+<div class="body_panel">
+    <div id="cat_title">
+	    <script type="text/javascript">
+            $("#cat_title" ).append(data.subCate.text)
+        </script>
+    </div>
+
+    <div id="cur_cat">
+        <script type="text/javascript">
+            console.log(data.ancestor);
+            curCat($("#cur_cat"), data.ancestor);
+            function curCat(root, cats) {
+                var d = cats.map(function(c) {
+                    return '<a href="/cat?cat=' + c.id + '"><div class="cat">' + c.text + '</div></a>';
+                }).join('<div class="cat">>></div>');
+
+                root.append($(d));
+            }
+        </script>
+    </div>
+
+    <div class="list_item">
+        <div class="list" id="lp">
+            <script type="text/javascript">
+                var data2 = data.products;
+                productList($("#lp"), data2);
+            </script>
+        </div>
+        <div class="page">
+            <script type="text/javascript">
+                var index = data.index;
+                var totalPage = data.count;
+                var url = "@Html(url)";
+
+                page($(".list_item .page"), index, totalPage, url);
+                function page(root, index, totalPage, url) {
+                    if (index > 0) {
+                        root.append($('<a href="' + url + 0 + '"><div class="first">«</div></a><a href="' + url + (index-1) + '"><div class="prev">‹</div></a>'));
+                    }
+                    root.append($('<div class="node">' + index + '</div>'))
+                    if (index < totalPage) {
+                        root.append($('<a href="' + url + (index+1) + '"><div class="next">›</div></a><a href="' + url + totalPage + '"><div class="last">»</div></a>'));
+                    }
+                }
+            </script>
+        </div>
+    </div>
+</div>

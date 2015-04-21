@@ -1,0 +1,10 @@
+@(rootCate: String, data: String, url: String)
+@template.main("Welcome to Play") {
+    <script type="text/javascript">
+        data = @Html(data)
+    </script>
+    <div id="container">
+        @parts.cats(rootCate)
+        @parts.products(url)
+    </div>
+}

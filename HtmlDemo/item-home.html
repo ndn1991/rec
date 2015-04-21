@@ -2,208 +2,185 @@
 <html>
 <head>
 	<title>Recommendation demo</title>
+	<meta charset="UTF-8">
 	<link rel="stylesheet" type="text/css" href="style.css">
+	<link rel="stylesheet" type="text/css" href="bootstrap.css">
+	<script type="text/javascript" src="jquery-1.11.2.min.js"></script>
+	<script type="text/javascript" src="jquery.menu-aim.js"></script>
+	<script type="text/javascript" src="bootstrap.min.js"></script>
 </head>
 <body>
 <div id="container">
 	<div class="tree_panel">
+	<div id="main_tree">
+		<div id="cats">Danh mục sản phẩm</div>
+		<div class="tree" id="tree">
+		    
+		</div>
 		
+		<script type="text/javascript">
+		var data = {
+			"id": 0,
+			"text": "root",
+			"children": [
+			{"id": 2, "text": "abc2"},
+			{"id": 3, "text": "abc3", "children": [
+				{"id": 9, "text": "abc9"},
+				{"id": 6, "text": "abc6"}
+			]},
+			{"id": 4, "text": "abc4"},
+			{"id": 5, "text": "abc5", "children": [
+				{"id": 10, "text": "abc10"},
+				{"id": 11, "text": "abc11"}
+			]},
+			]
+		}
+
+		writeTree($("#tree"), data, 0);
+
+		function writeTree(root, data, level) {
+			var ul = $("<ul>");
+			if (level == 0){ 
+				ul.attr("role", "menu");
+				ul.attr("id", "menu");
+			}
+			else {
+				ul.attr("id", "_" + data.id);
+			}
+			data.children.map(function(c) {
+				var li = $("<li>").attr("id", c.id);
+				var a = $("<a>").attr("href", "/chs?cat=" + c.id).append(c.text);
+				li.append(a);
+				if (typeof(c.children) != "undefined" && c.children != null) {
+					li.append(writeTree(li, c, 1));
+				}
+				ul.append(li);
+			})
+			root.append(ul);
+			return ul;
+		}
+
+		var $menu = $("#menu");
+		$menu.menuAim({
+            activate: activateSubmenu,
+            deactivate: deactivateSubmenu
+        });
+
+        function activateSubmenu(row) {
+            var $submenu = $("#_" + row.id),
+                height = $menu.outerHeight(),
+                width = $menu.outerWidth();
+            $submenu.css({
+                display: "block",
+                top: -1,
+                left: width + 5,
+                height: height - 4
+            });
+            $(row).addClass("maintainHover");
+        }
+        function deactivateSubmenu(row) {
+            var $submenu = $("#_" + row.id);
+            $submenu.css("display", "none");
+            $(row).removeClass("maintainHover");
+        }
+        $("#menu li").click(function(e) {
+            e.stopPropagation();
+        });
+        $("#tree").hide();
+        $("#menu li:has(ul)").find("ul").hide();
+        $("#cats").mouseenter(function(){
+        	$("#tree").show();
+        });
+        $("#tree").mouseleave(function(){
+        	$("#tree").hide();
+        });
+		</script>
+	</div>
+	<div id="sub_tree">
+		
+		<script type="text/javascript">
+			var data1 = {
+				"id": 0,
+				"text": "root",
+				"children": [
+				{"id": 2, "text": "abc2"},
+				{"id": 3, "text": "abc3", "children": [
+					{"id": 9, "text": "abc9"},
+					{"id": 6, "text": "abc6"}
+				]},
+				{"id": 4, "text": "abc4"},
+				{"id": 5, "text": "abc5", "children": [
+					{"id": 10, "text": "abc10"},
+					{"id": 11, "text": "abc11"}
+				]},
+				]
+			}
+
+			subTree($("#sub_tree"), data1);
+
+			function subTree(root, data) {
+				var ul = $("<ul>");
+				data.children.map(function(c) {
+					var li = $("<li>");
+					var a = $("<a>").attr("href", "/chs?cat=" + c.id).append(c.text);
+					li.append(a);
+					if (typeof(c.children) != "undefined" && c.children != null) {
+						li.append(subTree(li, c));
+					}
+					ul.append(li);
+				})
+				root.append(ul);
+				return ul;
+			}
+		</script>
+	</div>
 	</div>
 	<div class="body_panel">
+		<div id="cat_title">
+			Ndn ndn ndn
+		</div>
+		<div id="cur_cat">
+			<a href="/cat?cat=1"><div class="cat">abc1</div></a>
+			<div class="cat">>></div>
+			<a href="/cat?cat=1"><div class="cat">abc1</div></a>
+			<div class="cat">>></div>
+			<a href="/cat?cat=1"><div class="cat">abc1</div></a>
+			<div class="cat">>></div>
+			<a href="/cat?cat=1"><div class="cat">abc1</div></a>
+		</div>
 		<div class="list_item">
-			<div class="list">
-				<div class="item">
-					<div class="image">
-						<img src="/abc/demo/png" />
-					</div>
-					<div class="name">demo</div>
-				</div>
-				<div class="item">
-					<div class="image">
-						<img src="/abc/demo/png" />
-					</div>
-					<div class="name">demo</div>
-				</div>
-				<div class="item">
-					<div class="image">
-						<img src="/abc/demo/png" />
-					</div>
-					<div class="name">demo</div>
-				</div>
-				<div class="item">
-					<div class="image">
-						<img src="/abc/demo/png" />
-					</div>
-					<div class="name">demo</div>
-				</div>
-				<div class="item">
-					<div class="image">
-						<img src="/abc/demo/png" />
-					</div>
-					<div class="name">demo</div>
-				</div>
-				<div class="item">
-					<div class="image">
-						<img src="/abc/demo/png" />
-					</div>
-					<div class="name">demo</div>
-				</div>
-				<div class="item">
-					<div class="image">
-						<img src="/abc/demo/png" />
-					</div>
-					<div class="name">demo</div>
-				</div>
-				<div class="item">
-					<div class="image">
-						<img src="/abc/demo/png" />
-					</div>
-					<div class="name">demo</div>
-				</div>
-				<div class="item">
-					<div class="image">
-						<img src="/abc/demo/png" />
-					</div>
-					<div class="name">demo</div>
-				</div>
-				<div class="item">
-					<div class="image">
-						<img src="/abc/demo/png" />
-					</div>
-					<div class="name">demo</div>
-				</div>
-				<div class="item">
-					<div class="image">
-						<img src="/abc/demo/png" />
-					</div>
-					<div class="name">demo</div>
-				</div>
-				<div class="item">
-					<div class="image">
-						<img src="/abc/demo/png" />
-					</div>
-					<div class="name">demo</div>
-				</div>
-				<div class="item">
-					<div class="image">
-						<img src="/abc/demo/png" />
-					</div>
-					<div class="name">demo</div>
-				</div>
-				<div class="item">
-					<div class="image">
-						<img src="/abc/demo/png" />
-					</div>
-					<div class="name">demo</div>
-				</div>
-				<div class="item">
-					<div class="image">
-						<img src="/abc/demo/png" />
-					</div>
-					<div class="name">demo</div>
-				</div>
-				<div class="item">
-					<div class="image">
-						<img src="/abc/demo/png" />
-					</div>
-					<div class="name">demo</div>
-				</div>
-				<div class="item">
-					<div class="image">
-						<img src="/abc/demo/png" />
-					</div>
-					<div class="name">demo</div>
-				</div>
-				<div class="item">
-					<div class="image">
-						<img src="/abc/demo/png" />
-					</div>
-					<div class="name">demo</div>
-				</div>
-				<div class="item">
-					<div class="image">
-						<img src="/abc/demo/png" />
-					</div>
-					<div class="name">demo</div>
-				</div>
-				<div class="item">
-					<div class="image">
-						<img src="/abc/demo/png" />
-					</div>
-					<div class="name">demo</div>
-				</div>
-				<div class="item">
-					<div class="image">
-						<img src="/abc/demo/png" />
-					</div>
-					<div class="name">demo</div>
-				</div>
-				<div class="item">
-					<div class="image">
-						<img src="/abc/demo/png" />
-					</div>
-					<div class="name">demo</div>
-				</div>
-				<div class="item">
-					<div class="image">
-						<img src="/abc/demo/png" />
-					</div>
-					<div class="name">demo</div>
-				</div>
-				<div class="item">
-					<div class="image">
-						<img src="/abc/demo/png" />
-					</div>
-					<div class="name">demo</div>
-				</div>
-				<div class="item">
-					<div class="image">
-						<img src="/abc/demo/png" />
-					</div>
-					<div class="name">demo</div>
-				</div>
-				<div class="item">
-					<div class="image">
-						<img src="/abc/demo/png" />
-					</div>
-					<div class="name">demo</div>
-				</div>
-				<div class="item">
-					<div class="image">
-						<img src="/abc/demo/png" />
-					</div>
-					<div class="name">demo</div>
-				</div>
-				<div class="item">
-					<div class="image">
-						<img src="/abc/demo/png" />
-					</div>
-					<div class="name">demo</div>
-				</div>
-				<div class="item">
-					<div class="image">
-						<img src="/abc/demo/png" />
-					</div>
-					<div class="name">demo</div>
-				</div>
-				<div class="item">
-					<div class="image">
-						<img src="/abc/demo/png" />
-					</div>
-					<div class="name">demo</div>
-				</div>
-				<div class="item">
-					<div class="image">
-						<img src="/abc/demo/png" />
-					</div>
-					<div class="name">demo</div>
-				</div>
-				<div class="item">
-					<div class="image">
-						<img src="/abc/demo/png" />
-					</div>
-					<div class="name">demo</div>
-				</div>
+			<div class="list" id="lp">
+				<script type="text/javascript">
+					var data2 = [
+						{"name": "name1", "image": "image1"},
+						{"name": "name2", "image": "image2"},
+						{"name": "name3", "image": "image3"},
+						{"name": "name4", "image": "image4"},
+						{"name": "name5", "image": "image5"},
+						{"name": "name6", "image": "image6"},
+						{"name": "name7", "image": "image7"},
+						{"name": "name8", "image": "image8"},
+						{"name": "name9", "image": "image9"},
+						{"name": "name10", "image": "image10"},
+						{"name": "name11", "image": "image11"},
+						{"name": "name12", "image": "image12"},
+						{"name": "name13", "image": "image13"},
+						{"name": "name14", "image": "image14"},
+						{"name": "name15", "image": "image15"}
+					];
+
+					productList($("#lp"), data2);
+
+					function productList(root, data) {
+						data.map(function(c){
+							var item = $("<div>").addClass("item");
+							var image = $("<div>").addClass("image").append($("<img>").attr("src", c.image));
+							var name = $("<div>").addClass("name").text(c.name);
+							item.append(image).append(name);
+							root.append(item);
+						});
+					}
+				</script>				
 			</div>
 			<div class="page">
 				<div class="first"><<</div>

@@ -11,6 +11,7 @@ import scala.collection.JavaConverters._
 object ItemNeighsDAOImpl extends ForItem {
   private val cqlGetItemNeighs = "select neighs from item_neighs where item=?"
   private val cqlGetItemNeighsWithScore = "select neighs, sims from item_neighs where item=?"
+  private val cqlGetSet = "select item from item_neighs"
 
   override def getNeighs(item: Long): Array[Long] = {
     val _item: java.lang.Long = item
@@ -31,5 +32,10 @@ object ItemNeighsDAOImpl extends ForItem {
       val lScores = r.getList("sims", classOf[java.lang.Double]).asScala.toArray.map(_.toDouble)
       lNeighs.zip(lScores)
     }
+  }
+
+  val itemNeighsSet = getItemNeighsSet()
+  private def getItemNeighsSet(): Set[Int] = {
+    ConnectionTool.recSession.execute(cqlGetSet).asScala.map(_.getLong("item").toInt).toSet
   }
 }

@@ -121,6 +121,28 @@ object ItemNeighs {
       .mapValues(_.real)
   }
 
+  def findItemNeighborsByPr(rows: RDD[(Long, Long, Double)], numNeigh: Int, alpha: Double, numPar: Int) = {
+    val itemLen = rows.map{case (user, item, rate) => (item, 1)}
+      .combineByKey(
+        c => c,
+        (count: Int, c: Int) => count + c,
+        (count1: Int, count2: Int) => count1 + count2
+      ).collectAsMap().toMap
+    val userRates = rows.map{case (user, item, rate) => (user, (item, rate))}
+      .groupByKey()
+      .filter(_._2.size > 1)
+      .values
+      .map(_.toArray)
+    colSimPr(userRates, itemLen, alpha, numPar)
+      .map{case ((i1, i2), sim) => (i1, (i2, sim))}
+      .combineByKey(
+        (v) => new TopK[Long](numNeigh).put(v),
+        (topK: TopK[Long], v) => topK.put(v),
+        (topK1: TopK[Long], topK2: TopK[Long]) => topK1.put(topK2)
+      )
+      .mapValues(_.real)
+  }
+
   private val conf = ConfigFactory.load()
   private val keySpace = conf.getString("rec.cql.keySpace")
   private val table = conf.getString("rec.cql.table.orders")

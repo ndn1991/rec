@@ -9,5 +9,13 @@ object Tools {
   /**
    * Get first image from json string in image column in sql server
    */
-  def getImage(images: String): String = Json.parse(images).apply(0).\("ImageUrl").toString()
+  def getImage(images: String): String = {
+    try {
+      val json = Json.parse(images)
+      json(0).\("ImageUrl").as[String]
+    }
+    catch{
+      case e: Exception => ""
+    }
+  }
 }

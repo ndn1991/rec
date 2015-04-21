@@ -152,6 +152,56 @@ object Utils {
     }).reduceByKey(_ + _)
   }
 
+  /**
+   * Tính độ tương tự giữa các cột của ma trận bằng độ đo xác xuất
+   */
+  def colSimPr(rows: RDD[Array[(Long, Double)]], colLens: Map[Long, Int], alpha: Double, numPar: Int): RDD[((Long, Long), Double)] = {
+    require(alpha >= 0 && alpha <= 1, "alpha must be greater than zero and less than 1")
+    println(s"column similarity by Probabilistic without gamma")
+    colLens.map(_._2).foreach(v => require(v > 0, "Length of a column must be greater than zero"))
+    val sc = rows.context
+    val qBV = sc.broadcast(colLens)
+    val numCol = colLens.size
+    rows.coalesce(numPar)
+      .map(arr => (arr, arr.length))
+      .map { case (arr, len) => arr.map { case (id, value) => (id, value / len)}}
+      .mapPartitions(it => {
+      val q = qBV.value //colLens
+      val buf = mutable.HashMap[(Long, Long), Double]().withDefaultValue(0) //temp map save temp similarity between two item
+      val scaled = new Array[Double](numCol) // temp array save r(u,j) / (freq(j)^alpha)
+      it.foreach(row => {
+        val nnz = row.length
+        var k = 0
+        while (k < nnz) {
+          val row_k = row(k)
+          scaled(k) = row_k._2 / math.pow(q(row_k._1), alpha)
+          k += 1
+        }
+        k = 0
+        while (k < nnz) {
+          val i = row(k)._1
+          val iVal = scaled(k)
+          val iLen = q(i)
+          if (iVal != 0) {
+            var l = k + 1
+            while (l < nnz) {
+              val j = row(l)._1
+              val jVal = scaled(l)
+              val jLen = q(j)
+              if (jVal != 0) {
+                buf(i, j) += jVal / iLen
+                buf(j, i) += iVal / jLen
+              }
+              l += 1
+            }
+          }
+          k += 1
+        }
+      })
+      buf.iterator
+    }).reduceByKey(_ + _)
+  }
+
 
   def keyOnFirstItem[A, C](x: ((A, A), C)) = List((x._1._1, (x._1._2, x._2)), (x._1._2, (x._1._1, x._2)))
 

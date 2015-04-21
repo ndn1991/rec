@@ -1,0 +1,18 @@
+@(rootCate: String)
+<div class="tree_panel">
+    <div id="main_tree">
+        <div id="cats">Danh mục sản phẩm</div>
+        <div class="tree" id="tree">
+        </div>
+        <script type="text/javascript">
+            var dataCate = @Html(rootCate);
+            tree($("#tree"), dataCate, $("#cats"));
+        </script>
+    </div>
+    <div id="sub_tree">
+        <script type="text/javascript">
+            var dataSubCate = data.subCate;
+            subTree($("#sub_tree"), dataSubCate);
+        </script>
+    </div>
+</div>

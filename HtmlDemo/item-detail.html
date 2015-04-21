@@ -2,6 +2,10 @@
 <html><head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>Item detail Recommendation demo</title>
+	<script type="text/javascript" src="jquery-1.11.2.min.js"></script>
+	<script type="text/javascript" src="jquery.menu-aim.js"></script>
+	<script type="text/javascript" src="bootstrap.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="bootstrap.css">
 	<link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
@@ -12,189 +16,81 @@
 	<div class="body_panel">
 		<div class="item_detail">
 			<div class="detail">
-				<div class="item_image">
-					<img src="">
-				</div>
-				<div class="info">
-					<div class="name">
-						abc
-					</div>
-					<div class="price">
-						123456 VNĐ
-					</div>
-					<div class="full_cat">
-						<a href="1">1</a> &raquo;
-						<a href="2">2</a> &raquo;
-						<a href="3">3</a> &raquo;
-					</div>
-				</div>
+				
+				<script type="text/javascript">
+					var item = {"name": "abc", "price": "100 000", "image": "image.png", "fullCate": [
+						{"id": "1", "text": "c1"},
+						{"id": "2", "text": "c2"},
+						{"id": "2", "text": "c2"}
+					]};
+
+					detail($(".body_panel>.item_detail>.detail"), item);
+
+					function detail (root, p) {
+						var item_image = $("<div>").addClass("item_image").append($("<img>").attr("src", p.image));
+						root.append(item_image);
+						var info = $("<div>").addClass("info");
+						var name = $("<div>").addClass("name").append(p.name);
+						var price = $("<div>").addClass("price").append(p.price + " VNĐ");
+						var fullCat = $("<div>").addClass("full_cat");
+						var cats = p.fullCate.map(function(c){
+							return "<a href='" + c.id + "'>" + c.text + "</a>";
+						}).join("<span> &raquo; </span>");
+						fullCat.append($(cats));
+						info.append(name).append(price).append(fullCat);
+						root.append(info);
+					}
+				</script>
 			</div>
 			<div class="recommend">
 				<div class="tit">
 					Recommendations
 				</div>
-				<div class="item">
-					<div class="item_image">
-						<img src="">
-					</div>
-					<div class="info">
-						<div class="name">
-							<a href="abc">abc</a>
-						</div>
-						<div class="price">
-							123456 VNĐ
-						</div>
-						<div class="full_cat">
-							<a href="1">1</a> &raquo;
-							<a href="2">2</a> &raquo;
-							<a href="3">3</a> &raquo;
-						</div>
-					</div>
-				</div>
-				<div class="item">
-					<div class="item_image">
-						<img src="">
-					</div>
-					<div class="info">
-						<div class="name">
-							<a href="abc">abc</a>
-						</div>
-						<div class="price">
-							123456 VNĐ
-						</div>
-						<div class="full_cat">
-							<a href="1">1</a> &raquo;
-							<a href="2">2</a> &raquo;
-							<a href="3">3</a> &raquo;
-						</div>
-					</div>
-				</div>
-				<div class="item">
-					<div class="item_image">
-						<img src="">
-					</div>
-					<div class="info">
-						<div class="name">
-							<a href="abc">abc</a>
-						</div>
-						<div class="price">
-							123456 VNĐ
-						</div>
-						<div class="full_cat">
-							<a href="1">1</a> &raquo;
-							<a href="2">2</a> &raquo;
-							<a href="3">3</a> &raquo;
-						</div>
-					</div>
-				</div>
-				<div class="item">
-					<div class="item_image">
-						<img src="">
-					</div>
-					<div class="info">
-						<div class="name">
-							<a href="abc">abc</a>
-						</div>
-						<div class="price">
-							123456 VNĐ
-						</div>
-						<div class="full_cat">
-							<a href="1">1</a> &raquo;
-							<a href="2">2</a> &raquo;
-							<a href="3">3</a> &raquo;
-						</div>
-					</div>
-				</div>
-				<div class="item">
-					<div class="item_image">
-						<img src="">
-					</div>
-					<div class="info">
-						<div class="name">
-							<a href="abc">abc</a>
-						</div>
-						<div class="price">
-							123456 VNĐ
-						</div>
-						<div class="full_cat">
-							<a href="1">1</a> &raquo;
-							<a href="2">2</a> &raquo;
-							<a href="3">3</a> &raquo;
-						</div>
-					</div>
-				</div>
-				<div class="item">
-					<div class="item_image">
-						<img src="">
-					</div>
-					<div class="info">
-						<div class="name">
-							<a href="abc">abc</a>
-						</div>
-						<div class="price">
-							123456 VNĐ
-						</div>
-						<div class="full_cat">
-							<a href="1">1</a> &raquo;
-							<a href="2">2</a> &raquo;
-							<a href="3">3</a> &raquo;
-						</div>
-					</div>
-				</div>
-				<div class="item">
-					<div class="item_image">
-						<img src="">
-					</div>
-					<div class="info">
-						<div class="name">
-							<a href="abc">abc</a>
-						</div>
-						<div class="price">
-							123456 VNĐ
-						</div>
-						<div class="full_cat">
-							<a href="1">1</a> &raquo;
-							<a href="2">2</a> &raquo;
-							<a href="3">3</a> &raquo;
-						</div>
-					</div>
-				</div>
-				<div class="item">
-					<div class="item_image">
-						<img src="">
-					</div>
-					<div class="info">
-						<div class="name">
-							<a href="abc">abc</a>
-						</div>
-						<div class="price">
-							123456 VNĐ
-						</div>
-						<div class="full_cat">
-							<a href="1">1</a> &raquo;
-							<a href="2">2</a> &raquo;
-							<a href="3">3</a> &raquo;
-						</div>
-					</div>
-				</div>
-				<div class="item">
-					<div class="item_image">
-						<img src="">
-					</div>
-					<div class="info">
-						<div class="name">
-							<a href="abc">abc</a>
-						</div>
-						<div class="price">
-							123456 VNĐ
-						</div>
-						<div class="full_cat">
-							<a href="1">1</a> &raquo;
-							<a href="2">2</a> &raquo;
-							<a href="3">3</a> &raquo;
-						</div>
-					</div>
-				</div>
+
+				<script type="text/javascript">
+				var data2 = [
+				{"id": "1", "name": "abc", "price": "100 000", "image": "image.png", "fullCate": [{"id": "1", "text": "c1"},{"id": "2", "text": "c2"},{"id": "2", "text": "c2"}]},
+				{"id": "2", "name": "abc", "price": "100 000", "image": "image.png", "fullCate": [{"id": "1", "text": "c1"},{"id": "2", "text": "c2"},{"id": "2", "text": "c2"}]},
+				{"id": "3", "name": "abc", "price": "100 000", "image": "image.png", "fullCate": [{"id": "1", "text": "c1"},{"id": "2", "text": "c2"},{"id": "2", "text": "c2"}]},
+				{"id": "4", "name": "abc", "price": "100 000", "image": "image.png", "fullCate": [{"id": "1", "text": "c1"},{"id": "2", "text": "c2"},{"id": "2", "text": "c2"}]},
+				{"id": "5", "name": "abc", "price": "100 000", "image": "image.png", "fullCate": [{"id": "1", "text": "c1"},{"id": "2", "text": "c2"},{"id": "2", "text": "c2"}]},
+				{"id": "6", "name": "abc", "price": "100 000", "image": "image.png", "fullCate": [{"id": "1", "text": "c1"},{"id": "2", "text": "c2"},{"id": "2", "text": "c2"}]},
+				{"id": "7", "name": "abc", "price": "100 000", "image": "image.png", "fullCate": [{"id": "1", "text": "c1"},{"id": "2", "text": "c2"},{"id": "2", "text": "c2"}]},
+				{"id": "8", "name": "abc", "price": "100 000", "image": "image.png", "fullCate": [{"id": "1", "text": "c1"},{"id": "2", "text": "c2"},{"id": "2", "text": "c2"}]},
+				{"id": "9", "name": "abc", "price": "100 000", "image": "image.png", "fullCate": [{"id": "1", "text": "c1"},{"id": "2", "text": "c2"},{"id": "2", "text": "c2"}]},
+				{"id": "10", "name": "abc", "price": "100 000", "image": "image.png", "fullCate": [{"id": "1", "text": "c1"},{"id": "2", "text": "c2"},{"id": "2", "text": "c2"}]},
+				{"id": "11", "name": "abc", "price": "100 000", "image": "image.png", "fullCate": [{"id": "1", "text": "c1"},{"id": "2", "text": "c2"},{"id": "2", "text": "c2"}]},
+				{"id": "12", "name": "abc", "price": "100 000", "image": "image.png", "fullCate": [{"id": "1", "text": "c1"},{"id": "2", "text": "c2"},{"id": "2", "text": "c2"}]},
+				{"id": "13", "name": "abc", "price": "100 000", "image": "image.png", "fullCate": [{"id": "1", "text": "c1"},{"id": "2", "text": "c2"},{"id": "2", "text": "c2"}]},
+				{"id": "14", "name": "abc", "price": "100 000", "image": "image.png", "fullCate": [{"id": "1", "text": "c1"},{"id": "2", "text": "c2"},{"id": "2", "text": "c2"}]},
+				{"id": "15", "name": "abc", "price": "100 000", "image": "image.png", "fullCate": [{"id": "1", "text": "c1"},{"id": "2", "text": "c2"},{"id": "2", "text": "c2"}]},
+				{"id": "16", "name": "abc", "price": "100 000", "image": "image.png", "fullCate": [{"id": "1", "text": "c1"},{"id": "2", "text": "c2"},{"id": "2", "text": "c2"}]},
+				{"id": "17", "name": "abc", "price": "100 000", "image": "image.png", "fullCate": [{"id": "1", "text": "c1"},{"id": "2", "text": "c2"},{"id": "2", "text": "c2"}]},
+				{"id": "18", "name": "abc", "price": "100 000", "image": "image.png", "fullCate": [{"id": "1", "text": "c1"},{"id": "2", "text": "c2"},{"id": "2", "text": "c2"}]},
+				{"id": "19", "name": "abc", "price": "100 000", "image": "image.png", "fullCate": [{"id": "1", "text": "c1"},{"id": "2", "text": "c2"},{"id": "2", "text": "c2"}]}
+				];
+
+				rec($(".recommend"), data2);
+
+				function rec(root, data) {
+					data.map(function(p){
+						var item = $("<div>").addClass("item");
+						var item_image = $("<div>").addClass("item_image").append($("<img>").attr("src", p.image));
+						item.append(item_image);
+						var info = $("<div>").addClass("info");
+						var name = $("<div>").addClass("name").append($("<a>").attr("href", p.id).text(p.name));
+						var price = $("<div>").addClass("price").append(p.price + " VNĐ");
+						var fullCat = $("<div>").addClass("full_cat");
+						var cats = p.fullCate.map(function(c){
+							return "<a href='" + c.id + "'>" + c.text + "</a>";
+						}).join("<span> &raquo; </span>");
+						fullCat.append($(cats));
+						info.append(name).append(price).append(fullCat);
+						item.append(info);
+						root.append(item);
+					});
+				}
+				</script>
 			</div>
 		</div>
 	</div>

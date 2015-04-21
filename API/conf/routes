@@ -13,8 +13,9 @@ GET        /ib                  controllers.Application.getRecItemsItemBase(user
 GET        /ibs                 controllers.Application.getRecItemsItemBaseWithScore(user: Long)
 GET        /als                 controllers.Application.getRecItemsALS(user: Long)
 GET        /alss                controllers.Application.getRecItemsALSWithScore(user: Long)
-GET        /childs              controllers.Application.getChildrenCate(cat: Int)
-GET        /ps                  controllers.Application.getProducts(ids: List[Int])
-GET        /sps                 controllers.Application.getShortProducts(cat: Int, index: Int)
+GET        /scs                 controllers.Application.getSubCate(root: Int)
+GET        /ancestor            controllers.Application.getAncestor(cat: Int)
+GET        /root                controllers.Application.getRootCate()
+GET        /ps                  controllers.Application.getProducts(ids: String)
+GET        /sps                 controllers.Application.getShortProducts(cat: Int, index: Int ?= 0)
 GET        /p                   controllers.Application.getProduct(p: Int)
-

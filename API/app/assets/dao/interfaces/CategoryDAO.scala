@@ -10,11 +10,15 @@ import scala.concurrent.Future
 trait CategoryDAO {
   var numProductPerCate = 24
 
-  def getChildren(parent: Int): Array[Cate]
+  def getAncestor(cat: Int): Array[Cate]
+
+  def getDescendants(cat: Int): Cate
+
+  def getDescendants(cat: Int, level: Int): Cate
 
   def getShortProducts(cat: Int, index: Int): Future[(Int, Array[ShortProduct])]
 
-  def getProducts(ids: Seq[Int]): Array[Product]
+  def getProducts(ids: Array[Int]): Array[Product]
 
   def getProduct(id: Int): Product
 }

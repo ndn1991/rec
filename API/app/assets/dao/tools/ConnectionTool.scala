@@ -18,7 +18,7 @@ object ConnectionTool {
   private val recUser = conf.getString("api.cql.user.rec")
   private val recPass = conf.getString("api.cql.pass.rec")
 
-  val solr = "http://10.220.75.84:8983/solr/search.product/select?q="
+  val solr = "http://10.220.67.33:8983/solr/search.product/select?q="
 
   val (searchCluster, searchSession) = csdConnection(searchHosts, searchKeySpace, searchUser, searchPass)
   val (recCluster, recSession) = csdConnection(recHosts, recKeySpace, recUser, recPass)

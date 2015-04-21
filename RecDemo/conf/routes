@@ -1,0 +1,12 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+# Home page
+GET        /                    controllers.Application.cat(cat: Int = 1, index: Int = 0)
+GET        /cat                 controllers.Application.cat(cat: Int, index: Int ?= 0)
+GET        /p                   controllers.Application.detail(p: Int)
+# Map static resources from the /public folder to the /assets URL path
+GET        /assets/*file        controllers.Assets.at(path="/public", file)
+
+    
