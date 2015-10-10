@@ -1,0 +1,28 @@
+<component name="libraryTable">
+  <library name="ve-common-lib">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../VinCommon/lib/woodstox-core-asl-4.4.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../VinCommon/lib/log4j-core-2.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../VinCommon/lib/asm-3.3.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../VinCommon/lib/httpcore-4.3.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../VinCommon/lib/json-smart-2.1.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../VinCommon/lib/httpmime-4.3.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../VinCommon/lib/noggit-0.6.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../VinCommon/lib/jdbi-2.62.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../VinCommon/lib/solr-solrj-5.1.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../VinCommon/lib/log4j-api-2.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../VinCommon/lib/slf4j-api-1.7.10.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../VinCommon/lib/asm-1.0.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../VinCommon/lib/stax2-api-3.1.4.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../VinCommon/lib/zookeeper-3.4.6.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../VinCommon/lib/commons-io-2.4.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../VinCommon/lib/log4j-slf4j-impl-2.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../VinCommon/lib/dbpool-7.0-jdk7.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../VinCommon/lib/httpclient-4.3.1.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="file://$PROJECT_DIR$/../VinCommon/src" />
+    </SOURCES>
+  </library>
+</component>

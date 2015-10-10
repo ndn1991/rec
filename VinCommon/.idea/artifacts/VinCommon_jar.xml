@@ -1,0 +1,11 @@
+<component name="ArtifactManager">
+  <artifact name="VinCommon:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/VinCommon_jar</output-path>
+    <root id="root">
+      <element id="archive" name="VinCommon.jar">
+        <element id="module-output" name="VinCommon" />
+      </element>
+      <element id="library" level="module" name="IvyIDEA" module-name="VinCommon" />
+    </root>
+  </artifact>
+</component>

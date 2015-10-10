@@ -1,0 +1,53 @@
+<project name="ve-common" default="deploy" xmlns:ivy="antlib:org.apache.ivy.ant">
+
+	<property name="version">1.0.0</property>
+	<property name="jar.name">${ant.project.name}-${version}</property>
+	<property name="lib" value="lib" />
+	<property name="classes" value="bin" />
+	<property name="conf" value="conf" />
+	<property name="dist" value="dist" />
+	<property name="dist.jar" value="${dist}/jar" />
+
+    <target name="clean-cache" description="--> clean the ivy cache">
+        <ivy:cleancache />
+    </target>
+
+    <target name="resolve" description="retrieve dependencies with ivy">
+        <ivy:configure />
+        <delete dir="${lib}">
+            <include name="*.jar" />
+            <exclude name="sqljdbc*.jar" />
+        </delete>
+        <ivy:retrieve />
+    </target>
+
+	<target name="clear" description="delete dist folder">
+		<delete dir="${dist}" />
+	</target>
+
+	<target name="prep" depends="clear" description="make dirs">
+		<mkdir dir="${dist}" />
+		<mkdir dir="${dist.jar}" />
+        <mkdir dir="bin" />
+	</target>
+
+	<target name="build" depends="prep" description="build jar file">
+        <javac destdir="bin" includeantruntime="false">
+            <src path="src" />
+            <classpath>
+                <fileset dir="lib" casesensitive="false">
+                    <include name="**/*.jar"/>
+                </fileset>
+            </classpath>
+        </javac>
+		<jar jarfile="${dist.jar}/${jar.name}.jar">
+			<fileset dir="${classes}" />
+		</jar>
+	</target>
+
+	<target name="deploy" depends="build">
+		<copy todir="${dist}/${jar.name}">
+			<fileset dir="${dist.jar}" />
+		</copy>
+	</target>
+</project>
