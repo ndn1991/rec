@@ -1,0 +1,4 @@
+category_path=323 AND product_item_name:iphone => category_path:338 AND product_item_name:iphone
+category_path=323 AND product_item_name:samsung => category_path:338 AND product_item_name:samsung
+category_path=323 AND product_item_name:htc => category_path:338 AND product_item_name:htc
+category_path=323 AND product_item_name:lg => category_path:338 AND product_item_name:lg

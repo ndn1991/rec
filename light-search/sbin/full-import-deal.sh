@@ -1,0 +1,1 @@
+curl -s 'http://localhost:8983/solr/deal/dataimport?command=full-import&clean=false&entity=deal'

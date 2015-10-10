@@ -1,0 +1,52 @@
+@solr:
+	pre: 	/opt/bigdata/solr-5.1.0
+	dr: 	/opt/bigdata/solr-5.1.0
+	pro: 	/opt/solr-5.1.0
+	pro35: 	/opt/solr-5.1.0
+	vn: 	/opt/solr-5.1.0
+	dev: 	/opt/solr-5.1.0
+@username/@pass:
+	pre:	Adayroi_CategoryManagement/zcsrt@F442FShxau
+	dr:		quangvh/abcde@1234
+	pro:	quangvh/abcde@1234
+	pro35:	quangvh/abcde@1234
+	vn:		adruserfortest/adruserfortest@qaz
+	dev:	adruserfortest/adruserfortest@qaz
+@ip/@port:
+	pre:	10.220.66.50/1433
+	dr:		10.220.66.29/1433
+	pro:	10.220.66.29/1433
+	pro35:	10.220.66.29/1433
+	vn:		10.220.75.95/1433
+	dev:	10.220.75.25/1433
+@iphazelcast
+	pre:	10.220.67.80
+	dr:		10.220.67.137
+	pro:	10.220.67.34
+	pro35:	10.220.67.35
+	vn:		10.220.75.81
+	dev:	10.220.75.133
+@name_hazelcast/@pass_hazelcast
+	pre:	adr-pre-production/Noname(02)
+	dr:		adr-dr/Noname(02)
+	pro:	adr-production/Noname(02)
+	pro35:	adr-productionNoname(02)
+	vn:		dev/dev-pass
+	dev:	dev/dev-pass
+
+	
+LIGHT-SEARCH:
+	vi @solr/dist/big-data/conf/db.properties
+		Sửa @username, @pass, @ip, @port
+	vi @solr/dist/big-data/conf/hazelcast-client.xml
+		Sửa @iphazelcast, @name_hazelcast, @pass_hazelcast
+	vi @solr/dist/big-data/conf/hazelcast.xml
+		Sửa @iphazelcast, @name_hazelcast, @pass_hazelcast
+	vi @solr/dist/big-data/conf/system.properties
+		Sửa @username, @pass, @ip, @port
+	vi @solr/server/solr/deal/conf/db-data-config.xml
+		Sửa @username, @pass, @ip, @port
+	vi @solr/server/solr/merchant/conf/db-data-config.xml
+		Sửa @username, @pass, @ip, @port
+	vi @solr/server/solr/product/conf/db-data-config.xml
+		Sửa @username, @pass, @ip, @port

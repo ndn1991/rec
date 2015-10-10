@@ -1,0 +1,1 @@
+for var in $@ ; do ./start_one_core.sh -p $var ;  done;

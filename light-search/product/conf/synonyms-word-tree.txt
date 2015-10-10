@@ -1,0 +1,63 @@
+# The ASF licenses this file to You under the Apache License, Version 2.0
+# (the "License"); you may not use this file except in compliance with
+# the License.  You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+#-----------------------------------------------------------------------
+#some test synonym mappings unlikely to appear in real input text
+aaafoo => aaabar
+bbbfoo => bbbfoo bbbbar
+cccfoo => cccbar cccbaz
+fooaaa,baraaa,bazaaa
+
+# Some synonym groups specific to this example
+GB,gib,gigabyte,gigabytes
+MB,mib,megabyte,megabytes
+Television, Televisions, TV, TVs
+#notice we use "gib" instead of "GiB" so any WordDelimiterFilter coming
+#after us won't split it into two words.
+
+# Synonym mappings can be used for spelling correction too
+# phụ kiện
+tivi,tv
+tv => tv tivi ti vi
+tai_nghe => tai_nghe phụ_kiện
+bao_da => bao_da phụ_kiện
+pin_sạc_dự_phòng => pin_sạc_dự_phòng phụ_kiện
+cáp => cáp phụ_kiện
+robot => robot phụ_kiện
+ốp_lưng => ốp_lưng phụ_kiện
+cáp_micro => cáp_micro phụ_kiện
+củ_sạc => củ_sạc phụ_kiện
+củ_sạc_điện_thoại => củ_sạc_điện_thoại phụ_kiện
+loa => loa phụ_kiện
+loa_di_động => loa_di_động phụ_kiện
+bút => bút phụ_kiện
+bút_cảm_ứng => bút_cảm_ứng phụ_kiện
+dây => dây phụ_kiện
+dây_cáp => dây_cáp phụ_kiện
+đầu_chuyển_đổi => đầu_chuyển_đổi phụ_kiện
+adapter => adapter phụ_kiện
+thẻ_nhớ => thẻ_nhớ phụ_kiện
+nắp => nắp phụ_kiện
+nắp_lưng => nắp_lưng phụ_kiện
+miếng_dán => miếng_dán phụ_kiện
+miếng_dán_màn_hình => miếng_dán_màn_hình phụ_kiện
+màn_hình => màn_hình phụ_kiện
+túi_chống_nước => túi_chống_nước phụ_kiện
+đế_giữ_điện_thoại => đế_giữ_điện_thoại phụ_kiện
+ốp => ốp phụ_kiện
+giá_đỡ_điện_thoại => giá_đỡ_điện_thoại phụ_kiện
+đầu_đọc_thẻ => đầu_đọc_thẻ phụ_kiện
+cáp_nối => cáp_nối phụ_kiện
+
+#bảng bộ
+bảng_bộ => bảng_bộ bảng_viết
+bảng_đen => bảng_đen bảng_viết

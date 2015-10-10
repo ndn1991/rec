@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<schema name="frontend" version="1.5">
+	<field name="_root_" type="string" indexed="true" stored="false"/>
+	<field name="_version_" stored="true" indexed="true" type="long"/>
+	<!-- đơn vị nhỏ nhất dùng làm uniqueKey -->
+	<!-- đơn vị nhỏ nhất của productitem của một merchant bán hàng hàng tại một warehouse -->
+	<field name="product_item_id_warehouse_id" stored="true" indexed="true" type="string" required="true" multiValued="false" />
+
+	<field name="product_id" type="int" indexed="true" stored="true" multiValued="false" />
+	<field name="product_item_group" type="string" indexed="true" stored="true" multiValued="false" docValues="true"/>
+	<field name="product_item_id" type="int" indexed="true" stored="true" multiValued="false" />
+	<!--attribute text (format:attr_[id]_txt)-->
+	<dynamicField name="*_txt" type="string"   indexed="true"  stored="true" multiValued="false"/>
+	<dynamicField name="*_d" type="double"   indexed="true"  stored="true" multiValued="false"/>
+	<dynamicField name="*_score" type="float" indexed="true"  stored="true"  multiValued="false"/>
+	<!-- add 1/8/2015/sprint5s -->
+	<dynamicField name="*_order" type="int"   indexed="true"  stored="true" multiValued="false"/>
+
+	<field name="brand_id" type="int" indexed="true" stored="true" multiValued="false"/> <!-- about to change -->
+	<field name="brand_id_facet" type="string" indexed="false" stored="true" multiValued="false" docValues="true"/>
+	<field name="brand_name" type="text_no_ascii_folding" indexed="true" stored="true" multiValued="false" />
+
+	<field name="category_id" type="int" indexed="true" stored="true" multiValued="false"/> <!-- about to change -->
+	<field name="category_id_facet" type="string" indexed="false" stored="true" multiValued="false" docValues="true"/>
+	<field name="category_path" type="int" indexed="true" stored="true" multiValued="true" />
+
+	<field name="warehouse_id" type="int" indexed="true" stored="true" multiValued="false" />
+	<field name="merchant_id" type="int" indexed="true" stored="true" multiValued="false" />
+	<field name="merchant_id_facet" type="string" indexed="false" stored="true" multiValued="false" docValues="true"/>
+	<field name="merchant_name" type="text_no_ascii_folding" indexed="true" stored="true" multiValued="false" />
+
+	<field name="merchant_product_item_sku" type="string" indexed="true" stored="true" multiValued="false" />
+	<field name="merchant_product_item_sku_cm" type="text_sku_cm" indexed="true" stored="false" multiValued="false" />
+	
+
+	<field name="discount_percent" type="double" indexed="true" stored="true" multiValued="false" />
+	<field name="start_time_discount" type="long" indexed="true" stored="true" required="false" multiValued="false" />
+	<field name="finish_time_discount" type="long" indexed="true" stored="true" required="false" multiValued="false" />
+	<field name="barcode" type="text_no_ascii_folding" indexed="true" stored="true" multiValued="false" />
+	<field name="count_sell" type="int" indexed="true" stored="true" multiValued="false" />
+	<field name="count_view" type="long" indexed="true" stored="true" multiValued="false" />
+
+	<field name="viewed_total" type="long" indexed="true" stored="true" multiValued="false" />
+	<field name="viewed_year" type="long" indexed="true" stored="true" multiValued="false" />
+	<field name="viewed_month" type="int" indexed="true" stored="true" multiValued="false" />
+	<field name="viewed_week" type="int" indexed="true" stored="true" multiValued="false" />
+	<field name="viewed_day" type="int" indexed="true" stored="true" multiValued="false" />
+
+	<field name="sell_price" type="float" indexed="true" stored="true" multiValued="false"/>
+	<field name="product_item_name" type="text_tokenized_ascii" indexed="true" stored="true" multiValued="false" />
+	<!--added since 06/08/2015. use for collapse by name-->
+	<field name="untokenized_product_item_name" type="string" docValues="true" stored="true" multiValued="false" />
+	<field name="spell" type="text_no_ascii_folding" indexed="true" stored="true" multiValued="false" />
+	<field name="create_time" type="long" indexed="true" stored="true" multiValued="false" />
+
+	<field name="is_promotion" type="boolean" indexed="true" stored="true" multiValued="false" />
+	<field name="is_promotion_mapping" type="boolean" indexed="true" stored="true" multiValued="false" />
+
+	<field name="quantity" type="int" indexed="true" stored="true" multiValued="false" />
+	<field name="is_category_active" type="boolean" indexed="true" stored="true" multiValued="false" />
+	<field name="is_brand_active" type="boolean" indexed="true" stored="true" multiValued="false" />
+	<field name="is_merchant_active" type="boolean" indexed="true" stored="true" multiValued="false" />
+	<field name="warehouse_status" type="int" indexed="true" stored="true" multiValued="false" />
+	<field name="product_item_status" type="int" indexed="true" stored="true" multiValued="false" />
+	<field name="merchant_product_item_status" type="int" indexed="true" stored="true" multiValued="false" />
+
+	<field name="received_city_id" type="int" indexed="true" stored="true" multiValued="true" />
+	<field name="received_city_id_facet" type="string" indexed="false" stored="true" multiValued="true" docValues="true"/>
+	<field name="weight" type="double" indexed="true" stored="true" multiValued="false" />
+
+	<field name="product_item_type" type="int" indexed="true" stored="true" multiValued="false" />
+	<field name="image" type="string" indexed="false" stored="true" multiValued="false" />
+	<field name="visible" type="int" indexed="true" stored="true" multiValued="true" />
+	<field name="on_site" type="int" indexed="true" stored="true" multiValued="false" />
+	<field name="product_item_id_merchant_id" type="string" indexed="true" stored="true" multiValued="false" />
+
+	<field name="vat_status" type="int" indexed="true" stored="true" multiValued="false" />
+	<field name="price_status" type="int" indexed="true" stored="true" multiValued="false" />
+
+	<field name="category_facet" type="string" indexed="false" stored="true" multiValued="false" docValues="true"/>
+	<field name="merchant_facet" type="string" indexed="false" stored="true" multiValued="false" docValues="true"/>
+	<field name="brand_facet" type="string" indexed="false" stored="true" multiValued="false" docValues="true"/>
+
+	<!-- Ngay 11/7 Sprint 5 -->
+	<field name="promotion_price" type="float" indexed="true" stored="true" multiValued="false" />
+	<field name="boost_score" type="float" indexed="true" stored="true" multiValued="false" />
+	<field name="product_item_policy" type="int" indexed="true" stored="true" multiValued="false" />
+	<field name="product_item_policy_bits" type="int" indexed="true" stored="true" multiValued="true" />
+	
+	<!-- Added at 23/7 Sprint 5S -->
+	<field name="served_province_ids" type="string" indexed="true" stored="true" multiValued="true" />
+	<field name="served_district_ids" type="string" indexed="true" stored="true" multiValued="true" />
+	<field name="served_ward_ids" type="string" indexed="true" stored="true" multiValued="true" />
+	
+	<!-- Added at 28/7/2015 Sprint 5S -->
+	<field name="category_tree" type="c_text" indexed="true" stored="true" multiValued="true" />
+	
+	<!-- Added at 29/7/2015 Sprint 5S -->
+	<field name="attribute_search" type="text_tokenized_ascii" indexed="true" stored="true" multiValued="true" />
+
+	<!-- Added at 4/8/2015 Sprint 5S -->
+	<field name="image_histogram" type="wt_string" indexed="true" stored="true" multiValued="false" />
+
+	<!-- Added since 03/08/2015-->
+	<field name="product_item_name_cm" type="text_tokenized_ascii" indexed="true" stored="false" multiValued="false" />
+	
+	<!-- Add at 10/8/2015 Sprint 5S++ -->
+	<field name="price_flag" type="boolean" indexed="true" stored="true" multiValued="false"/>
+	
+	<!-- Add at 28/08/2015 -->
+	<field name="tags" type="tag_type" indexed="true" stored="true" multiValued="true" />
+	
+	<!-- Add at 21/09/2015 -->
+	<field name="is_not_apply_commision" type="boolean" indexed="true" stored="true" multiValued="false"/>
+	<field name="commision_fee" type="float" indexed="true" stored="true" multiValued="false"/>
+	
+	<copyField source="merchant_id" dest="merchant_id_facet"/>
+	<copyField source="brand_id" dest="brand_id_facet"/>
+	<copyField source="category_id" dest="category_id_facet"/>
+	<copyField source="received_city_id" dest="received_city_id_facet"/>
+	<copyField source="product_item_name" dest="spell"/>
+	<copyField source="product_item_name" dest="untokenized_product_item_name"/>
+	<copyField source="product_item_name" dest="product_item_name_cm"/>
+	<copyField source="merchant_product_item_sku" dest="merchant_product_item_sku_cm"/>
+	
+
+	<uniqueKey>product_item_id_warehouse_id</uniqueKey>
+
+	<similarity class="solr.SchemaSimilarityFactory"/>
+
+	<fieldType name="string" class="solr.StrField" sortMissingLast="true" />
+	<fieldType name="boolean" class="solr.BoolField" sortMissingLast="true"/>
+	<fieldType name="int" class="solr.TrieIntField" precisionStep="0" positionIncrementGap="0"/>
+	<fieldType name="float" class="solr.TrieFloatField" precisionStep="0" positionIncrementGap="0"/>
+	<fieldType name="long" class="solr.TrieLongField" precisionStep="0" positionIncrementGap="0"/>
+	<fieldType name="double" class="solr.TrieDoubleField" precisionStep="0" positionIncrementGap="0"/>
+	<fieldType name="wt_string" class="solr.TextField">
+		<analyzer type="index">
+			<tokenizer class="solr.StandardTokenizerFactory"/>
+		</analyzer>
+		<analyzer type="query">
+			<tokenizer class="solr.StandardTokenizerFactory"/>
+		</analyzer>
+	</fieldType>
+    <fieldType name="text_tokenized_ascii" class="solr.TextField" positionIncrementGap="100">
+      <analyzer type="index">
+      	<charFilter class="solr.MappingCharFilterFactory" mapping="vietnamese-normalizer.txt"/>
+        <tokenizer class="solr.StandardTokenizerFactory"/>
+        <filter class="solr.ICUNormalizer2FilterFactory" name="nfkc_cf" mode="compose"/>
+        <filter class="solr.StopFilterFactory" ignoreCase="true" words="stopwords.txt" />
+        <filter class="solr.LowerCaseFilterFactory"/>
+		<filter class="solr.WordDelimiterFilterFactory" preserveOriginal="1" />
+		<filter class="com.lucidworks.analysis.AutoPhrasingTokenFilterFactory" phrases="autophrases.txt" includeTokens="true"  replaceWhitespaceWith="_"/>
+		<filter class="solr.SynonymFilterFactory" synonyms="synonyms-word-tree.txt" ignoreCase="true" expand="true"/>
+		<filter class="solr.SynonymFilterFactory" synonyms="synonyms.txt" ignoreCase="true" expand="true" />
+		<filter class="solr.ASCIIFoldingFilterFactory" preserveOriginal="true"/>
+      </analyzer>
+      <analyzer type="query">
+      	<charFilter class="solr.MappingCharFilterFactory" mapping="vietnamese-normalizer.txt"/>
+        <tokenizer class="solr.StandardTokenizerFactory"/>
+		<filter class="solr.SynonymFilterFactory" synonyms="autoCorrects.txt" ignoreCase="true" expand="false" />
+		<filter class="solr.SynonymFilterFactory" synonyms="synonyms-before.txt" ignoreCase="true" expand="false" />
+        <filter class="solr.ICUNormalizer2FilterFactory" name="nfkc_cf" mode="compose"/>
+        <filter class="solr.StopFilterFactory" ignoreCase="true" words="stopwords.txt" />
+        <filter class="solr.SynonymFilterFactory" synonyms="synonyms.txt" ignoreCase="true" expand="true" />
+        <filter class="solr.LowerCaseFilterFactory"/>
+      </analyzer>
+    </fieldType>
+	
+	<fieldType name="c_text" class="solr.TextField" positionIncrementGap="100">
+      <analyzer type="index">
+      	<charFilter class="solr.MappingCharFilterFactory" mapping="vietnamese-normalizer.txt"/>
+        <tokenizer class="solr.StandardTokenizerFactory"/>
+        <filter class="solr.ICUNormalizer2FilterFactory" name="nfkc_cf" mode="compose"/>
+        <filter class="solr.LowerCaseFilterFactory"/>
+		<filter class="solr.SynonymFilterFactory" synonyms="synonyms-word-tree.txt" ignoreCase="true" expand="true"/>
+		<filter class="solr.ASCIIFoldingFilterFactory" preserveOriginal="true"/>
+      </analyzer>
+      <analyzer type="query">
+      	<charFilter class="solr.MappingCharFilterFactory" mapping="vietnamese-normalizer.txt"/>
+        <tokenizer class="solr.StandardTokenizerFactory"/>
+		<filter class="solr.SynonymFilterFactory" synonyms="autoCorrects.txt" ignoreCase="true" expand="false" />
+		<filter class="solr.SynonymFilterFactory" synonyms="synonyms-before.txt" ignoreCase="true" expand="false" />
+        <filter class="solr.ICUNormalizer2FilterFactory" name="nfkc_cf" mode="compose"/>
+        <filter class="solr.LowerCaseFilterFactory"/>
+      </analyzer>
+    </fieldType>
+	
+	<fieldType name="tag_type" class="solr.TextField" positionIncrementGap="100" autoGeneratePhraseQueries="true">
+      <analyzer type="index">
+		<charFilter class="solr.MappingCharFilterFactory" mapping="vietnamese-normalizer.txt"/>
+        <tokenizer class="solr.StandardTokenizerFactory"/>
+        <filter class="solr.ICUNormalizer2FilterFactory" name="nfkc_cf" mode="compose"/>
+		<filter class="solr.LowerCaseFilterFactory"/>		
+		<filter class="solr.ASCIIFoldingFilterFactory" preserveOriginal="true"/>
+	  </analyzer>
+	  <analyzer type="query">
+		<charFilter class="solr.MappingCharFilterFactory" mapping="vietnamese-normalizer.txt"/>
+        <tokenizer class="solr.StandardTokenizerFactory"/>
+        <filter class="solr.ICUNormalizer2FilterFactory" name="nfkc_cf" mode="compose"/>
+		<filter class="solr.LowerCaseFilterFactory"/>
+	  </analyzer>
+    </fieldType>
+    
+    <fieldType name="text_sku_cm" class="solr.TextField" positionIncrementGap="100">
+      <analyzer>
+      	<charFilter class="solr.PatternReplaceCharFilterFactory" 
+                    pattern="\s+" replacement="_"/>
+		<tokenizer class="solr.KeywordTokenizerFactory"/>
+		<filter class="solr.LowerCaseFilterFactory"/>
+	  </analyzer>
+    </fieldType>
+	
+	<fieldType name="text_no_ascii_folding" class="solr.TextField" positionIncrementGap="100">
+      <analyzer>
+		<tokenizer class="solr.StandardTokenizerFactory"/>
+		<filter class="solr.LowerCaseFilterFactory"/>
+	  </analyzer>
+    </fieldType>
+</schema>

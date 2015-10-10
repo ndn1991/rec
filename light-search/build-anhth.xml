@@ -1,0 +1,93 @@
+<project name="light-search" default="deploy" xmlns:ivy="antlib:org.apache.ivy.ant">
+	<!-- some variables used -->
+	<property name="app-name">light-search</property>
+	<property name="version">1.0.1.build-946569be</property>
+
+	<property name="jar.name">${ant.project.name}-${version}</property>
+	<property name="lib.dir" value="lib" />
+	<property name="build.classes" value="bin" />
+	<property name="src.dir" value="src" />
+	<property name="conf" value="conf" />
+	<property name="dist" value="dist/${app-name}" />
+	<property name="build.jar" value="dist/jar" />
+	<property name="dist.big-data" value="${dist}/big-data" />
+	<property name="dist.conf" value="${dist}/conf" />
+	<property name="scripts" value="sbin" />
+	<property name="testbed-host" value="10.220.75.135" />
+	<property name="username" value="root" />
+	<property name="pass" value="rootroot" />
+	<property name="deploy-dir" value="/home/quangvh/solr-5.1.0/dist/big-data" />
+	<property name="remote.target" value="/home/quangvh/solr-5.1.0" />
+
+	<!-- clean cache for ivy -->
+	<target name="clean-cache" description="--> clean the ivy cache">
+		<ivy:cleancache />
+	</target>
+
+	<!-- User when ivy.xml changed -->
+	<target name="resolve" description="retreive dependencies with ivy">
+		<delete dir="${lib.dir}">
+			<include name="*.jar" />
+		</delete>
+		<ivy:settings file="ivysetting/ivysettings.xml" />
+		<ivy:retrieve />
+	</target>
+
+	<target name="report" depends="resolve" description="generates a report of dependencies">
+		<ivy:report todir="${build.classes}" />
+	</target>
+
+	<target name="clear" description="delete dist folder">
+		<delete dir="${dist}" />
+	</target>
+
+	<target name="prep" depends="clear" description="make dirs">
+		<mkdir dir="${dist}" />
+		<mkdir dir="${dist.big-data}" />
+		<mkdir dir="${dist.conf}" />
+		<mkdir dir="${build.jar}" />
+	</target>
+
+	<target name="build" depends="prep" description="build jar file">
+		<jar jarfile="${build.jar}/${jar.name}.jar">
+			<fileset dir="${build.classes}" />
+		</jar>
+	</target>
+
+	<target name="deploy" depends="build" description="copy nessesary files to dist folder">
+		<copy todir="${dist.conf}">
+			<fileset dir="${conf}">
+				<exclude name="db" />
+			</fileset>
+		</copy>
+		<copy todir="${dist.big-data}">
+			<fileset dir="${lib.dir}">
+				<include name="*.jar" />
+			</fileset>
+		</copy>
+		<copy todir="${dist.big-data}">
+			<fileset dir="${build.jar}">
+				<include name="*.jar" />
+			</fileset>
+		</copy>
+		<copy todir="${dist}">
+			<fileset dir="${scripts}" />
+		</copy>
+	</target>
+
+	<target name="deploy-remotely" depends="deploy">
+		<sshexec command="rm -fr ${deploy-dir};mkdir ${deploy-dir}" host="${testbed-host}" username="root" password="rootroot" trust="true" failonerror="false" />
+		<scp todir="root@${testbed-host}:${deploy-dir}" password="rootroot" trust="yes">
+			<fileset dir="${dist.big-data}">
+				<include name="*.jar" />
+			</fileset>
+		</scp>
+
+		<scp todir="root@${testbed-host}:${deploy-dir}" password="rootroot" trust="yes">
+			<fileset dir="${dist}">
+				<include name="**/conf/*" />
+			</fileset>
+		</scp>
+	</target>
+
+</project>

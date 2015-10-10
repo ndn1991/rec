@@ -1,0 +1,32 @@
+#Boost sounds like boobs
+#Format [CATEGORY]-[REGEX]-[BOOST]
+#Document matching regex has not processed. So there is no lower case or filter effect on the fields of documents.
+#Example: Our regex has to be [.*iPhone.*], but not [.*iphone.*]
+#
+#If a document matches more than one regex, its boosting score will be multiplicated.
+#Example: document D matches regex R1 having boost core 1.5 and matches regex R2 having boost score 2. Then 
+# document D will be indexed totally with a boost score = 1.5*2=3
+
+324-.*iphone.*-1.75
+329-.*ipad.*-2.0
+325,326,327,324-.*điện thoại.*-2.0
+325,326,327,324-.*điện thoại di động.*-2.0
+325,326,327,324-.*-1.5
+684-.*gạo.*-2
+684-.*gao.*-2
+642-.*xoai.*-2
+642-.*xoài.*-2
+325,328-.*samsung galaxy.*-1.5
+325,328-.*galaxy.*-1.5
+324,329-.*apple.*-1.5
+356-.*man hinh.*-1.5
+356-.*màn hình.*-1.5
+378-.*chuột.*-1.5
+378-.*chuot.*-1.5
+1131,822-.*chăn.*-1.5
+1-.*áo.*-1.5
+326-.*lumia.*-1.5
+629,642-.*bơ.*-1.5
+350,353-.*may tinh.*-2.0
+30-.*vay.*-2.0
+350-.*laptop.*-5.0

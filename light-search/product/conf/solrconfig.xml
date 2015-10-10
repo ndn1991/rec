@@ -1,0 +1,490 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<config>
+	<luceneMatchVersion>5.0.0</luceneMatchVersion>
+	<lib dir="${solr.install.dir:../../../..}/contrib/dataimporthandler/lib" regex=".*\.jar" />
+	<lib dir="${solr.install.dir:../../../..}/contrib/extraction/lib" regex=".*\.jar" />
+	<lib dir="${solr.install.dir:../../../..}/contrib/analysis-extras/lib" regex=".*\.jar" />
+	<lib dir="${solr.install.dir:../../../..}/contrib/analysis-extras/lucene-libs" regex=".*\.jar" />
+	<lib dir="${solr.install.dir:../../../..}/dist/" regex="solr-cell-\d.*\.jar" />
+	<lib dir="${solr.install.dir:../../../..}/contrib/clustering/lib/" regex=".*\.jar" />
+	<lib dir="${solr.install.dir:../../../..}/dist/" regex="solr-clustering-\d.*\.jar" />
+	<lib dir="${solr.install.dir:../../../..}/contrib/langid/lib/" regex=".*\.jar" />
+	<lib dir="${solr.install.dir:../../../..}/dist/" regex="solr-langid-\d.*\.jar" />
+	<lib dir="${solr.install.dir:../../../..}/contrib/velocity/lib" regex=".*\.jar" />
+	<lib dir="${solr.install.dir:../../../..}/dist/" regex="solr-velocity-\d.*\.jar" />
+	<lib dir="${solr.install.dir:../../..}/dist/" regex=".*\.jar" />
+	<lib dir="${solr.install.dir:../../..}/dist/big-data/" regex=".*\.jar" />
+	<dataDir>${solr.data.dir:}</dataDir>
+	<directoryFactory name="DirectoryFactory" class="${solr.directoryFactory:solr.NRTCachingDirectoryFactory}" />
+	<codecFactory class="solr.SchemaCodecFactory" />
+	<schemaFactory class="ClassicIndexSchemaFactory" />
+	<indexConfig>
+		<lockType>${solr.lock.type:native}</lockType>
+		<infoStream>true</infoStream>
+	</indexConfig>
+	<jmx />
+	<!-- <jmx agentId="myAgent" /> -->
+	<!-- If you want to start a new MBeanServer, specify the serviceUrl -->
+	<!-- <jmx serviceUrl="service:jmx:rmi:///jndi/rmi://localhost:9999/solr"/> -->
+
+	<!-- The default high-performance update handler -->
+	<updateHandler class="solr.DirectUpdateHandler2">
+
+		<updateLog>
+			<str name="dir">${solr.ulog.dir:}</str>
+		</updateLog>
+		<autoCommit>
+			<maxTime>${solr.autoCommit.maxTime:15000}</maxTime>
+			<openSearcher>false</openSearcher>
+		</autoCommit>
+		<commitWithin>
+			<softCommit>true</softCommit>
+		</commitWithin>
+		<autoSoftCommit>
+			<maxTime>${solr.autoSoftCommit.maxTime:3000}</maxTime>
+		</autoSoftCommit>
+	</updateHandler>
+	<query>
+		<maxBooleanClauses>1024</maxBooleanClauses>
+		<slowQueryThresholdMillis>-1</slowQueryThresholdMillis>
+		<filterCache class="solr.FastLRUCache" size="512" initialSize="512" autowarmCount="0" />
+		<queryResultCache class="solr.LRUCache" size="512" initialSize="512" autowarmCount="0" />
+		<documentCache class="solr.LRUCache" size="512" initialSize="512" autowarmCount="0" />
+		<cache name="perSegFilter" class="solr.search.LRUCache" size="10" initialSize="0" autowarmCount="10"
+		regenerator="solr.NoOpRegenerator" />
+		<cache name="nativecache" class="solr.search.LRUCache" size="2048" initialSize="1024" autowarmCount="8"
+		regenerator="solr.NoOpRegenerator" />
+		<enableLazyFieldLoading>true</enableLazyFieldLoading>
+		<queryResultWindowSize>20</queryResultWindowSize>
+		<queryResultMaxDocsCached>200</queryResultMaxDocsCached>
+		<listener event="newSearcher" class="solr.QuerySenderListener">
+			<arr name="queries"></arr>
+		</listener>
+		<listener event="firstSearcher" class="solr.QuerySenderListener">
+			<arr name="queries">
+				<lst>
+					<str name="q">static firstSearcher warming in solrconfig.xml</str>
+				</lst>
+			</arr>
+		</listener>
+
+		<!-- Use Cold Searcher If a search request comes in and there is no current registered searcher, then immediately register
+		the still warming searcher and use it. If "false" then all requests will block until the first searcher is done warming. -->
+		<useColdSearcher>false</useColdSearcher>
+
+		<!-- Max Warming Searchers Maximum number of searchers that may be warming in the background concurrently. An error is
+		returned if this limit is exceeded. Recommend values of 1-2 for read-only slaves, higher for masters w/o cache warming. -->
+		<maxWarmingSearchers>4</maxWarmingSearchers>
+
+	</query>
+
+	<!-- Adayroi AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA -->
+	<requestHandler name="/dataimport" class="solr.DataImportHandler">
+		<lst name="defaults">
+			<str name="config">db-data-config.xml</str>
+			<str name="clean">false</str>
+		</lst>
+	</requestHandler>
+	<!-- lucene classification -->
+	<!--logistic regression classification -->
+	<requestHandler name="/logistic-suggestion" class="com.adr.bigdata.search.handler.BaseSuggestionHandler"
+	startup="lazy">
+		<lst name="defaults">
+			<str name="wt">json</str>
+			<str name="omitHeader">true</str>
+			<str name="echoParams">explicit</str>
+			<str name="fl">product_item_name</str>
+			<str name="df">product_item_name</str>
+		</lst>
+		<lst name="config">
+			<str name="dir">${solr.install.dir:}/server/solr/product/logistic-classifier</str>
+			<str name="model">${solr.install.dir:}/server/solr/product/logistic-classifier/train_priname_catlevel_1.model</str>
+			<str name="category">${solr.install.dir:}/server/solr/product/logistic-classifier/categoryIdVsCategoryName</str>
+			<str name="use2gram">true</str>
+			<str name="use3gram">false</str>
+			<str name="accent">true</str>
+		</lst>
+		<lst name="appends">
+			<str name="fq">on_site:511</str>
+		</lst>
+	</requestHandler>
+
+	<!-- search with many information fields -->
+	<requestHandler name="/search" class="com.adr.bigdata.search.handler.ComboCreationRequestHandler" startup="lazy">
+		<lst name="defaults">
+
+			<str name="omitHeader">true</str>
+			<str name="wt">groupedjson</str>
+			<str name="echoParams">explicit</str>
+			<int name="rows">10</int>
+			<str name="df">product_item_name</str>
+		</lst>
+		<lst name="appends">
+			<str name="fq">on_site:511</str>
+			<str name="fl">product_id,product_item_id,is_promotion,is_hot,is_new,product_item_name,discount_percent,sell_price,original_price,fresh_food_type,
+				original_price, fresh_food_type,image,product_item_type</str>
+		</lst>
+	</requestHandler>
+
+	<!--handler for recommendation that returns only product_id and product_item_id -->
+	<requestHandler name="/base_recommend" class="solr.SearchHandler"
+	startup="lazy">
+		<lst name="defaults">
+			<str name="omitHeader">true</str>
+			<str name="wt">groupedjson</str>
+			<str name="echoParams">explicit</str>
+			<str name="q">*:*</str>
+		</lst>
+		<lst name="appends">
+			<str name="df">product_item_name</str>
+			<str name="fq">on_site:511</str>
+			<str name="fl">product_id,product_item_id,warehouse_id,merchant_id,category_id</str>
+		</lst>
+	</requestHandler>
+
+	<!--search that returns only product_id and product_item_id -->
+	<requestHandler name="/combo_search" class="com.adr.bigdata.search.handler.ComboSearchRequestHandler"
+	startup="lazy">
+		<lst name="defaults">
+			<str name="omitHeader">true</str>
+			<str name="wt">groupedjson</str>
+			<str name="echoParams">explicit</str>
+			<str name="df">product_item_name</str>
+			<str name="q">*:*</str>
+			<str name="rows">1000000</str>
+			<str name="fl">productid:product_id,productitemid:product_item_id,warehouseid:warehouse_id,merchantid:merchant_id,categoryid:category_id,
+				servedprovinceids:served_province_ids,serveddistrictids:served_district_ids,servedwardids:served_ward_ids</str>
+		</lst>
+		<lst name="appends">
+			<str name="fq">on_site:511</str>			
+		</lst>
+	</requestHandler>
+
+	<!--search that returns only product_id and product_item_id -->
+	<requestHandler name="/search_new" class="com.adr.bigdata.search.handler.FrontEndRequestHandler"
+	startup="lazy">
+		<lst name="defaults">
+			<str name="omitHeader">true</str>
+			<str name="wt">groupedjson</str>
+			<str name="echoParams">explicit</str>
+			<int name="rows">10</int>
+			<str name="df">product_item_name</str>
+			<str name="spellcheck">true</str>
+			<str name="spellcheck.count">20</str>
+			<str name="spellcheck.collate">true</str>
+			<str name="mm">3&lt;75%</str>
+		</lst>
+		<lst name="appends">
+			<str name="fq">on_site:511</str>
+			<str name="fl">product_id,product_item_id,warehouse_id,merchant_id,category_id</str>
+		</lst>
+		<arr name="last-components">
+			<str>spellcheck</str>
+		</arr>
+	</requestHandler>
+	<requestHandler name="/item_neighs" class="com.adr.bigdata.search.handler.ItemNeighsRequestHandler" startup="lazy">
+		<lst name="defaults">
+			<str name="omitHeader">true</str>
+			<str name="wt">groupedjson</str>
+			<str name="echoParams">explicit</str>
+			<int name="rows">10</int>
+		</lst>
+		<lst name="appends">
+			<str name="fl">product_id,product_item_id,warehouse_id,product_item_name,score,category_id</str>
+		</lst>
+	</requestHandler>
+	<requestHandler name="/search_debug" class="com.adr.bigdata.search.handler.FrontEndRequestHandler"
+	startup="lazy">
+		<lst name="defaults">
+			<str name="omitHeader">true</str>
+			<str name="wt">groupedjson</str>
+			<str name="echoParams">explicit</str>
+			<int name="rows">10</int>
+			<str name="df">product_item_name</str>
+			<str name="spellcheck">true</str>
+			<str name="spellcheck.count">20</str>
+			<str name="spellcheck.collate">true</str>
+			<str name="mm">3&lt;75%</str>
+		</lst>
+		<lst name="appends">
+			<str name="fq">on_site:511</str>
+			<str name="fl">product_id,product_item_id,warehouse_id,product_item_name,score,category_id</str>
+		</lst>
+		<arr name="last-components">
+			<str>spellcheck</str>
+		</arr>
+	</requestHandler>
+
+	<!--landing page API handler -->
+	<requestHandler name="/landingpage" class="com.adr.bigdata.search.handler.LandingPageRequestHandler"
+	startup="lazy">
+		<lst name="defaults">
+			<str name="omitHeader">true</str>
+			<str name="wt">groupedjson</str>
+			<str name="echoParams">explicit</str>
+			<str name="df">product_item_name</str>
+			<str name="q">*:*</str>
+		</lst>
+		<lst name="appends">
+			<str name="fq">on_site:511</str>
+			<str name="fl">product_id,product_item_id,warehouse_id,merchant_id,category_id</str>
+		</lst>
+	</requestHandler>
+
+	<!-- search for CM backend -->
+	<requestHandler name="/search_cm" class="com.adr.bigdata.search.handler.CmBackendRequestHandler"
+	startup="lazy">
+		<lst name="defaults">
+			<str name="omitHeader">true</str>
+			<str name="wt">groupedjson</str>
+			<str name="echoParams">explicit</str>
+			<int name="rows">10</int>
+			<str name="df">product_item_name</str>
+		</lst>
+		<lst name="appends">
+			<str name="group">true</str>
+			<str name="group.field">product_item_id_merchant_id</str>
+			<str name="group.ngroups">true</str>
+			<str name="group.limit">100</str>
+			<str name="fl">product_id,product_item_id, brand_id, category_id, create_date, image, merchant_id,
+				merchant_product_item_status, merchant_product_item_sku, product_item_status, warehouse_id,
+				product_item_id_warehouse_id,barcode, category_path, weight, visible,create_time,product_item_type</str>
+			<!-- <str name="fq">-warehouse_status:"-1"</str> -->
+		</lst>
+	</requestHandler>
+	<requestHandler name="/search_cm_2" class="com.adr.bigdata.search.handler.CmBackendRequestHandler"
+	startup="lazy">
+		<lst name="defaults">
+			<str name="omitHeader">true</str>
+			<str name="wt">groupedjson</str>
+			<str name="echoParams">explicit</str>
+			<int name="rows">10</int>
+			<str name="df">product_item_name</str>
+		</lst>
+		<lst name="appends">
+			<str name="group">true</str>
+			<str name="group.field">product_item_id</str>
+			<str name="group.ngroups">true</str>
+			<str name="group.limit">100</str>
+			<str name="fl">product_item_id, product_item_id_warehouse_id, category_id, quantity</str>
+			<!-- <str name="fq">-warehouse_status:"-1"</str> -->
+		</lst>
+	</requestHandler>
+	<requestHandler name="/search_customer_service" class="com.adr.bigdata.search.handler.CustomerServiceHandler"
+	startup="lazy">
+		<lst name="defaults">
+			omitHeader
+			<str name="omitHeader">true</str>
+			<str name="wt">groupedjson</str>
+			<str name="echoParams">explicit</str>
+			<int name="rows">10</int>
+			<str name="df">product_item_name</str>
+			<str name="mm">3&lt;75%</str>
+		</lst>
+		<lst name="appends">
+			<str name="fq">on_site:511</str>
+			<str name="fl">product_id,product_item_id,warehouseid:warehouse_id</str>
+		</lst>
+	</requestHandler>
+	<requestHandler name="/related_product" class="com.adr.bigdata.search.handler.RelatedProductHandler"
+	startup="lazy">
+		<lst name="defaults">
+			omitHeader
+			<str name="omitHeader">true</str>
+			<str name="wt">groupedjson</str>
+			<str name="echoParams">explicit</str>
+			<int name="rows">10</int>
+			<str name="df">product_item_name</str>
+		</lst>
+		<lst name="appends">
+			<str name="fq">on_site:511</str>
+			<str name="fl">product_id,product_item_id,merchant_id,category_id,warehouse_id,is_promotion,is_hot,is_new,product_item_name,discount_percent,sell_price,original_price,fresh_food_type,
+				original_price</str>
+		</lst>
+	</requestHandler>
+	<requestHandler name="/getfilter" class="com.adr.bigdata.search.handler.GetFilterHandler" startup="lazy">
+		<lst name="defaults">
+			omitHeader
+			<str name="omitHeader">true</str>
+			<str name="wt">groupedjson</str>
+			<str name="echoParams">explicit</str>
+			<int name="rows">10</int>
+			<str name="df">product_item_name</str>
+			<str name="mm">3&lt;75%</str>
+		</lst>
+		<lst name="appends">
+			<str name="fq">on_site:511</str>
+			<str name="fl">product_id,product_item_id,is_promotion,is_hot,is_new,product_item_name,discount_percent,sell_price,original_price,fresh_food_type,
+				original_price</str>
+		</lst>
+	</requestHandler>
+	<requestHandler name="/new_getfilter"
+	class="com.adr.bigdata.search.handler.NewGetFilterRequestHandler"
+	startup="lazy">
+		<lst name="defaults">
+			omitHeader
+			<str name="omitHeader">true</str>
+			<str name="wt">groupedjson</str>
+			<str name="echoParams">explicit</str>
+			<int name="rows">10</int>
+			<str name="df">product_item_name</str>
+			<str name="mm">3&lt;75%</str>
+		</lst>
+		<lst name="appends">
+			<str name="fq">on_site:511</str>
+			<str name="fl">product_id,product_item_id,is_promotion,is_hot,is_new,product_item_name,discount_percent,sell_price,original_price,fresh_food_type,original_price</str>
+		</lst>
+	</requestHandler>
+
+	<!--Suggest component -->
+	<searchComponent name="spellcheck" class="solr.SpellCheckComponent">
+		<lst name="spellchecker">
+
+			<!-- The classname is optional, defaults to IndexBasedSpellChecker -->
+			<str name="classname">solr.IndexBasedSpellChecker</str>
+			<!-- Load tokens from the following field for spell checking, analyzer for the field's type as defined in schema.xml are
+			used -->
+			<str name="field">spell</str>
+			<!-- Set the accuracy (float) to be used for the suggestions. Default is 0.5 -->
+			<str name="accuracy">0.6</str>
+			<!-- Require terms to occur in 1/100th of 1% of documents in order to be included in the dictionary -->
+			<float name="thresholdTokenFrequency">.0001</float>
+			<str name="buildOnCommit">true</str>
+		</lst>
+	</searchComponent>
+	<!--Suggest component AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA -->
+	<requestDispatcher handleSelect="false">
+
+		<requestParsers enableRemoteStreaming="true" multipartUploadLimitInKB="2048000"
+		formdataUploadLimitInKB="2048" addHttpRequestToContext="false" />
+		<httpCaching never304="true" />
+
+	</requestDispatcher>
+	<requestHandler name="/select" class="solr.SearchHandler">
+		<lst name="defaults">
+			<str name="echoParams">explicit</str>
+			<int name="rows">10</int>
+			<bool name="preferLocalShards">false</bool>
+		</lst>
+	</requestHandler>
+
+	<!-- A request handler that returns indented JSON by default -->
+	<requestHandler name="/query" class="solr.SearchHandler">
+		<lst name="defaults">
+			<str name="echoParams">explicit</str>
+			<str name="wt">json</str>
+			<str name="indent">true</str>
+			<str name="df">text</str>
+		</lst>
+	</requestHandler>
+
+	<!-- The export request handler is used to export full sorted result sets. Do not change these defaults. -->
+	<requestHandler name="/export" class="solr.SearchHandler">
+		<lst name="invariants">
+			<str name="rq">{!xport}</str>
+			<str name="wt">xsort</str>
+			<str name="distrib">false</str>
+		</lst>
+		<arr name="components">
+			<str>query</str>
+		</arr>
+	</requestHandler>
+
+	<!-- Distributed Stream processing. -->
+	<requestHandler name="/stream" class="solr.StreamHandler">
+		<lst name="invariants">
+			<str name="wt">json</str>
+			<str name="distrib">false</str>
+		</lst>
+	</requestHandler>
+	<initParams path="/update/**,/query,/select,/tvrh,/elevate,/spell,/browse">
+		<lst name="defaults">
+			<str name="df">text</str>
+		</lst>
+	</initParams>
+	<initParams path="/update/json/docs">
+		<lst name="defaults">
+			<str name="srcField">_src_</str>
+			<str name="mapUniqueKeyOnly">true</str>
+		</lst>
+	</initParams>
+	<requestHandler name="/update/extract" startup="lazy" class="solr.extraction.ExtractingRequestHandler">
+		<lst name="defaults">
+			<str name="lowernames">true</str>
+			<str name="uprefix">ignored_</str>
+
+			<!-- capture link hrefs but ignore div attributes -->
+			<str name="captureAttr">true</str>
+			<str name="fmap.a">links</str>
+			<str name="fmap.div">ignored_</str>
+		</lst>
+	</requestHandler>
+	<requestHandler name="/analysis/field" startup="lazy" class="solr.FieldAnalysisRequestHandler" />
+	<requestHandler name="/analysis/document" class="solr.DocumentAnalysisRequestHandler" startup="lazy" />
+	<requestHandler name="/debug/dump" class="solr.DumpRequestHandler">
+		<lst name="defaults">
+			<str name="echoParams">explicit</str>
+			<str name="echoHandler">true</str>
+		</lst>
+	</requestHandler>
+	<requestHandler name="/admin/ping" class="solr.PingRequestHandler">
+		<lst name="invariants">
+			<str name="q">solrpingquery</str>
+		</lst>
+		<lst name="defaults">
+			<str name="qt">standard</str>
+			<str name="df">product_item_name</str>
+			<str name="echoParams">all</str>
+		</lst>
+		<!-- An optional feature of the PingRequestHandler is to configure the handler with a "healthcheckFile" which can be used
+		to enable/disable the PingRequestHandler. relative paths are resolved against the data dir -->
+		<str name="healthcheckFile">server-enabled.txt</str>
+	</requestHandler>
+	<queryResponseWriter name="groupedjson" class="com.adr.bigdata.search.handler.response.FrontEndJsonGroupWriter">
+		<str name="content-type">text/plain; charset=UTF-8</str>
+		<lst name="field-name-converter">
+			<str name="product_id">productid</str>
+			<str name="product_item_id">productitemid</str>
+			<str name="is_promotion">ispromotion</str>
+			<str name="is_hot">ishot</str>
+			<str name="is_new">isnew</str>
+			<str name="product_item_name">productname</str>
+			<str name="discount_percent">discountpercent</str>
+			<str name="sell_price">sellprice</str>
+			<str name="original_price">originalprice</str>
+			<str name="fresh_food_type">freshfoodtype</str>
+			<str name="product_item_type">productitemtype</str>
+			<str name="served_province_ids">servedprovinceids</str>
+		</lst>
+	</queryResponseWriter>
+	<queryResponseWriter name="json" class="solr.JSONResponseWriter">
+		<str name="content-type">text/plain; charset=UTF-8</str>
+	</queryResponseWriter>
+	<updateRequestProcessorChain name="vin_update_chain" default="false">
+		<processor class="com.adr.bigdata.updateprocessor.boost.RegexpBoostProcessorFactory">
+			<bool name="enable">true</bool>
+			<str name="inputField">product_item_name</str>
+			<str name="boostField">product_item_name</str>
+			<str name="boostFilename">boost.txt</str>
+		</processor>
+		<processor class="com.adr.bigdata.updateprocessor.attributesearch.AttributeSearchUpdateProcessorFactory">
+			<bool name="enable">true</bool>
+			<str name="attSearchFileName">attribute_search.json</str>
+		</processor>
+		<processor class="solr.LogUpdateProcessorFactory" />
+		<processor class="solr.RunUpdateProcessorFactory" />
+	</updateRequestProcessorChain>
+	<admin>
+		<defaultQuery>*:*</defaultQuery>
+	</admin>
+	<queryParser name="autophrasingParser" class="com.lucidworks.analysis.AutoPhrasingQParserPlugin" >
+		<str name="phrases">autophrases.txt</str>
+		<str name="ignoreCase">false</str>
+		<str name="replaceWhitespaceWith">_</str>
+		<lst name="correct">
+			<str name="synonyms">autoCorrects.txt</str>
+			<str name="ignoreCase">true</str>
+			<str name="expand">false</str>
+		</lst>
+	</queryParser>
+</config>

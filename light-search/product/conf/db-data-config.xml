@@ -1,0 +1,219 @@
+<dataConfig>
+	<dataSource type="JdbcDataSource" name="cm"
+		driver="com.microsoft.sqlserver.jdbc.SQLServerDriver"
+		url="jdbc:sqlserver://@ip:@port;databaseName=@cm_db_name"
+		user="@username_cm" 
+		password="@pass_cm" />
+		
+	<dataSource type="JdbcDataSource" name="tracking"
+		driver="com.microsoft.sqlserver.jdbc.SQLServerDriver"
+		url="jdbc:sqlserver://@ip:@port;databaseName=Adayroi_Tracking"
+		user="@username_tracking" 
+		password="@pass_tracking" />
+	
+	<document>
+		
+		<entity name="product_view" dataSource="cm" transformer="com.vinecom.solr.dih.AtomicTransformer"
+				query="select WPM.Id, case when PV.LastUpdated >= convert(date, getdate()) then ISNULL(PV.Yesterday, 0) else ISNULL(PV.ToDay, 0) end as ViewCount from Warehouse_ProductItem_Mapping WPM left join Adayroi_Tracking.dbo.ProductViews PV on WPM.ProductItemId=PV.ProductItemID" >		
+			<field column="Id" name="product_item_id_warehouse_id" key="true" />
+			<field column="ViewCount" name="viewed_day"/>
+		</entity>
+		
+		<entity name="tags" dataSource="cm" transformer="com.vinecom.solr.dih.TagTransformer"
+				query="select WPM.Id, P_I.TagJson from ProductItem as P_I inner join Warehouse_ProductItem_Mapping as WPM on P_I.Id=WPM.ProductItemId where TagJson is not null">
+			<field column="Id" name="product_item_id_warehouse_id" key="true" />
+		</entity>
+		
+		<entity name="warehouse_product_item" dataSource="cm"
+				query="select Id, ProductItemId, MerchantId, WarehouseId, SellPrice, (Quantity - Isnull(SafetyStock,0)) as Quantity, MerchantProductItemStatus, MerchantSku, IsVisible, IsVisible as OnSite, VatStatus, PriceStatus, case when OriginalPrice>SellPrice then 'true' else 'false' end as PriceFlag from Warehouse_ProductItem_Mapping"
+				transformer="com.vinecom.solr.dih.ProductTransformer,TemplateTransformer">
+			<field column="Id" name="product_item_id_warehouse_id" />
+			<field column="ProductItemId" name="product_item_id" />
+			<field column="WarehouseId" name="warehouse_id" />
+			<field column="MerchantId" name="merchant_id" />
+			<field column="MerchantSku" name="merchant_product_item_sku" />
+			<field column="count_sell" name="count_sell" template="0" />
+			<field column="SellPrice" name="sell_price" />
+			<field column="Quantity" name="quantity" />
+			<field column="MerchantProductItemStatus" name="merchant_product_item_status" />
+			<field column="IsVisible" name="visible" isVisible="true" />
+			<field column="OnSite" name="on_site" />
+			<field column="VatStatus" name="vat_status" />
+			<field column="PriceStatus" name="price_status" />
+			<field column="PriceFlag" name="price_flag" />	
+			<entity name="boost" dataSource="cm"
+					query="select WarehouseProductMapID, JsonScore as Score, Score as BoostScore, DistrictsJson as AdministrativeUnit from BootstScore"
+					cacheImpl="SortedMapBackedCache" 
+					cacheKey="WarehouseProductMapID"
+					cacheLookup="warehouse_product_item.Id"
+					transformer="com.vinecom.solr.dih.ScoreTransformer,com.vinecom.solr.dih.AdministrativeUnitTransformer">
+				<field column="BoostScore" name="boost_score" />
+			</entity>
+			
+			<entity name="discount" dataSource="cm"
+					query="select * from (select *, ROW_NUMBER() over (partition by WarehouseProductItemMappingId order by PromotionProductItemStatus desc, PromotionStatus desc, StartDate asc) as num from (select PPM.WarehouseProductItemMappingId, PPM.PromotionPrice, PRO.StartDate, PRO.FinishDate, case when PPM.PromotionProductItemStatus=1 and PPM.RemainQuantity>0 then 1 else 0 end as PromotionProductItemStatus, case when PRO.PromotionStatus=2 then 1 else 0 end as PromotionStatus from Promotion_ProductItem_Mapping as PPM inner join Promotions as PRO on PPM.PromotionId=PRO.Id where PRO.FinishDate > getdate()) as tmp1) as tmp2 where num=1"
+					cacheImpl="SortedMapBackedCache" 
+					cacheKey="WarehouseProductItemMappingId"
+					cacheLookup="warehouse_product_item.Id"
+					transformer="com.vinecom.solr.dih.ProductTransformer,TemplateTransformer" >
+				<field column="PromotionPrice" name="promotion_price" />
+				<field column="StartDate" name="start_time_discount" utc="true" />
+				<field column="FinishDate" name="finish_time_discount" utc="true" />
+				
+				<field column="PromotionStatus" name="is_promotion" trueIs="1" />
+				<field column="PromotionProductItemStatus" name="is_promotion_mapping" trueIs="1" />
+			</entity>
+			
+			<entity name="view_count" dataSource="tracking"
+					query="select ProductItemId, case when LastUpdated >= convert(date, getdate()) then ISNULL(Yesterday, 0) else ISNULL(ToDay, 0) end as ViewCount from Adayroi_Tracking.dbo.ProductViews"
+					cacheImpl="SortedMapBackedCache" 
+					cacheKey="ProductItemId"
+					cacheLookup="warehouse_product_item.ProductItemId" >
+				<field column="ViewCount" name="viewed_day"/>
+			</entity>
+			
+			<entity name="merchant" dataSource="cm"
+					query="select Id, MerchantName, MerchantStatus from MerchantProfile"
+					cacheImpl="SortedMapBackedCache" 
+					cacheKey="Id"
+					cacheLookup="warehouse_product_item.MerchantId"
+					transformer="TemplateTransformer" >
+				<field column="MerchantName" name="merchant_name" builtInUnicode="true" />
+				<field column="merchant_facet" name="merchant_facet" template="${merchant.MerchantStatus}_${merchant.Id}_${merchant.MerchantName}" />	
+				<field column="product_item_id_merchant_id" name="product_item_id_merchant_id" template="${warehouse_product_item.ProductItemId}_${merchant.Id}" />		
+			</entity>
+			
+			<entity name="warehouse" dataSource="cm"
+					query="select WPM.Id, WarehouseStatus, case when P_I.ProductItemType=2 or P_I.ProductItemType=4 or P_I.ProductItemPolicy &lt;&gt; 1 then cast(W.ProvinceId as varchar) + ',0' else '4,8,0' end as CityIds from Warehouse W inner join Warehouse_ProductItem_Mapping WPM on WPM.WarehouseId=W.Id inner join ProductItem as P_I on P_I.Id=WPM.ProductItemId"
+					cacheImpl="SortedMapBackedCache" 
+					cacheKey="Id"
+					cacheLookup="warehouse_product_item.Id" 
+					transformer="RegexTransformer">				
+				<field column="WarehouseStatus" name="warehouse_status" />
+				<field column="CityIds" name="received_city_id" splitBy="," />
+			</entity>
+			
+			<entity name="landing_page" dataSource="cm" transformer="com.vinecom.solr.dih.LandingPageTransformer"
+					query="select WarehouseProductItemId, LandingPageId, LandingPageGroupId, Priority as LandingPagePriority from LandingPage_ProductItem_Mapping where StatusId=1"
+					cacheImpl="SortedMapBackedCache" 
+					cacheKey="WarehouseProductItemId"
+					cacheLookup="warehouse_product_item.Id" >
+			</entity>
+			
+			<entity name="product_item" dataSource="cm"
+					query="select Id, ProductId, ProductItemName, ProductItemStatus, Weight, ProductItemType, Images, CreatedDate, ProductItemPolicy, ProductItemPolicy as ProductItemPolicyBit, AttributeDetail from ProductItem"
+					cacheImpl="SortedMapBackedCache" 
+					cacheKey="Id"
+					cacheLookup="warehouse_product_item.ProductItemId" 
+					transformer="com.vinecom.solr.dih.ProductTransformer,com.vinecom.solr.dih.AttributeDealtailTransformer">		
+				<field column="ProductId" name="product_id" />
+				<field column="ProductId" name="product_item_group" />
+				<field column="ProductItemName" name="product_item_name" builtInUnicode="true" />
+				<field column="ProductItemStatus" name="product_item_status" />
+				<field column="Weight" name="weight" />
+				<field column="ProductItemType" name="product_item_type" />
+				<field column="Images" name="image" />
+				<field column="CreatedDate" name="create_time" utc="true" />
+				<field column="ProductItemPolicy" name="product_item_policy" />
+				<field column="ProductItemPolicyBit" name="product_item_policy_bits" isVisible="true" />
+				
+				<entity name="attribute" dataSource="cm"
+					query="[Product_Solr_Get_All_Attribute]"
+					cacheKey="ProductItemId" 
+					cacheLookup="product_item.Id" 
+					cacheImpl="SortedMapBackedCache"
+					transformer="com.vinecom.solr.dih.AttributeTransformer" />
+				
+				<entity name="product" dataSource="cm"
+						query="select Id, BrandId, CategoryId, Barcode from Product"
+						cacheImpl="SortedMapBackedCache" 
+						cacheKey="Id"
+						cacheLookup="product_item.ProductId" >	
+					<field column="BrandId" name="brand_id" />
+					<field column="CategoryId" name="category_id" />
+					<field column="Barcode" name="barcode" />
+					
+					<entity name="brand" dataSource="cm"
+							query="select Id, BrandName, BrandStatus from Brand"
+							cacheImpl="SortedMapBackedCache" 
+							cacheKey="Id"
+							cacheLookup="product.BrandId" 
+							transformer="TemplateTransformer">	
+						<field column="BrandName" name="brand_name" />
+						<field column="brand_facet" name="brand_facet" template="${brand.BrandStatus}_${brand.Id}_${brand.BrandName}" />
+					</entity>
+					
+					<entity name="category" dataSource="cm"
+							query="[Product_Solr_Get_All_Cat_Path]"
+							cacheImpl="SortedMapBackedCache" 
+							cacheKey="Id" 
+							cacheLookup="product.CategoryId"
+							transformer="RegexTransformer,TemplateTransformer">
+						<field column="Path" name="category_path" splitBy="," />
+						<field column="Tree" name="category_tree" splitBy=">>" />
+						<field column="category_facet" name="category_facet" template="${category.Status}_${category.Id}_${category.Name}" />
+					</entity>
+				</entity>
+			</entity>
+		</entity>
+		
+		<entity name="product_element" query="[Product_Solr_New]"
+				transformer="com.vinecom.solr.dih.ScoreTransformer,com.vinecom.solr.dih.AdministrativeUnitTransformer,com.vinecom.solr.dih.ProductTransformer,com.vinecom.solr.dih.AttributeDealtailTransformer,com.vinecom.solr.dih.LandingPageTransformer,TemplateTransformer,RegexTransformer">
+			<field column="ProductId" name="product_id" />
+			<field column="ProductId" name="product_item_group" />
+			<field column="ProductItemId" name="product_item_id" />
+			<field column="BrandId" name="brand_id" />
+			<field column="BrandName" name="brand_name" />
+			<field column="CategoryId" name="category_id" />
+			<field column="WarehouseId" name="warehouse_id" />
+			<field column="MerchantId" name="merchant_id" />
+			<field column="MerchantName" name="merchant_name" />
+			<field column="MerchantProductItemSKU" name="merchant_product_item_sku" />
+			<field column="PromotionPrice" name="promotion_price" />
+			<field column="StartDateDiscount" name="start_time_discount" utc="true" />
+			<field column="FinishDateDiscount" name="finish_time_discount" utc="true" />
+			<field column="Barcode" name="barcode" />
+			<field column="count_sell" name="count_sell" template="0" />
+			<field column="count_view" name="count_view" template="0"/>
+			<field column="SellPrice" name="sell_price" />
+			<field column="ProductItemName" name="product_item_name" builtInUnicode="true" />
+			<field column="CreateTime" name="create_time" utc="true" />
+			<field column="IsPromotion" name="is_promotion" trueIs="1" />
+			<field column="IsPromotionMapping" name="is_promotion_mapping" trueIs="1" />
+			<field column="Quantity" name="quantity" />
+			<field column="ProductItemStatus" name="product_item_status" />
+			<field column="MerchantProductItemStatus" name="merchant_product_item_status" />	
+			<field column="CityIds" name="received_city_id" splitBy="," />
+			<field column="Weight" name="weight" />            
+			<field column="IsVisible" name="visible" isVisible="true" />
+			<field column="OnSite" name="on_site" />            
+			<field column="ProductItemType" name="product_item_type" />
+			<field column="Images" name="image" />
+			<field column="VatStatus" name="vat_status" />
+			<field column="PriceStatus" name="price_status" />			
+			<field column="BoostScore" name="boost_score" />			
+			<field column="ProductItemPolicy" name="product_item_policy" />
+			<field column="PriceFlag" name="price_flag" />	
+			<entity name="attribute" 
+					query="[Product_Solr_Get_All_Attribute]"
+					cacheKey="ProductItemId" 
+					cacheLookup="product_element.ProductItemId" 
+					cacheImpl="SortedMapBackedCache"
+					transformer="com.vinecom.solr.dih.AttributeTransformer" />
+			<entity name="category" 
+					query="[Product_Solr_Get_All_Cat_Path]"
+					cacheImpl="SortedMapBackedCache" 
+					cacheKey="Id" 
+					cacheLookup="product_element.CategoryId"
+					transformer="RegexTransformer,TemplateTransformer">
+				<field column="Tree" name="category_tree" splitBy=">>" />
+				<field column="Path" name="category_path" splitBy="," />				
+				<field column="category_facet" name="category_facet" template="${category.Status}_${category.Id}_${category.Name}" />
+			</entity>			
+			<field column="product_item_id_merchant_id" name="product_item_id_merchant_id" template="${product_element.ProductItemId}_${product_element.MerchantId}" />
+			<field column="ProductItemWarehouseId" name="product_item_id_warehouse_id" />
+			<field column="merchant_facet" name="merchant_facet" template="${product_element.MerchantStatus}_${product_element.MerchantId}_${product_element.MerchantName}" />
+			<field column="brand_facet" name="brand_facet" template="${product_element.BrandStatus}_${product_element.BrandId}_${product_element.BrandName}" />
+		</entity>
+	</document>
+</dataConfig>

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- For Merchant Search -->
+<schema name="merchant_search" version="1.5">
+	<field name="_root_" type="string" indexed="true" stored="false"/>
+	<field name="_version_" stored="true" indexed="true" type="long"/>
+	<field name="merchantid" type="int" indexed="true" stored="true" />
+	<field name="merchantcode" type="text_general" indexed="true" stored="true" />
+	<field name="merchantname" type="text_general" indexed="true" stored="true" />
+	<field name="companyname" type="text_general" indexed="true" stored="true" />
+	<field name="merchantdescription" type="text_general" indexed="false" stored="true" />
+	<field name="merchantlogo" type="text_general" indexed="false" stored="true" />
+	<field name="phone" type="text_general" indexed="true" stored="true" />
+	<field name="fax" type="text_general" indexed="true" stored="true" />
+	<field name="email" type="text_general" indexed="true" stored="true" />
+	<field name="website" type="text_general" indexed="true" stored="true" />
+	<field name="bankowner" type="text_general" indexed="true" stored="true" />
+	<field name="bankname" type="text_general" indexed="true" stored="true" />
+	<field name="bankbranch" type="text_general" indexed="true" stored="true" />
+	<field name="taxcode" type="text_general" indexed="true" stored="true" />
+	<field name="merchantstatus" type="int" indexed="true" stored="true" />
+	<field name="updateddate" type="date" indexed="true" stored="true" />
+	<field name="createddate" type="date" indexed="true" stored="true" />
+	<field name="userid" type="int" indexed="true" stored="true" />
+	<field name="createduserid" type="int" indexed="true" stored="true" />
+	<field name="updateduserid" type="int" indexed="true" stored="true" />
+	<field name="merchanttype" type="int" indexed="true" stored="true" />
+	<field name="unfullfilled" type="boolean" indexed="true" stored="true" />
+	<field name="noteadmin" type="text_general" indexed="false" stored="true" />
+	<field name="returnpolicy" type="text_general" indexed="false" stored="true" />
+	<field name="banknumber" type="text_general" indexed="false" stored="true" />
+	<field name="merchantgroupmember" type="text_general" indexed="false" stored="true" />
+
+	<field name="merchantcontactids" type="int" indexed="true" stored="true" multiValued="true" />
+	<field name="contactnames" type="text_general" indexed="true" stored="true" multiValued="true" />
+	<field name="contacttype" type="int" indexed="true" stored="true" multiValued="true" />
+	<field name="emailcontact" type="text_general" indexed="true" stored="true" multiValued="true" />
+	<field name="contactuserids" type="int" indexed="true" stored="true" multiValued="true" />
+	<field name="contactcreateddates" type="date" indexed="true" stored="true" multiValued="true" />
+	<field name="contactupdateduserids" type="int" indexed="true" stored="true" multiValued="true" />
+	<field name="contactupdateddates" type="date" indexed="true" stored="true" multiValued="true" />
+
+	<field name="merchantaddressids" type="int" indexed="true" stored="true" multiValued="true" />
+	<field name="addressids" type="long" indexed="true" stored="true" multiValued="true" />
+	<field name="provinids" type="int" indexed="true" stored="true" multiValued="true" />
+	<field name="districtids" type="int" indexed="true" stored="true" multiValued="true" />
+	<field name="villageids" type="int" indexed="true" stored="true" multiValued="true" />
+	<field name="roadids" type="int" indexed="true" stored="true" multiValued="true" />
+	<field name="addresstypes" type="int" indexed="true" stored="true" multiValued="true" />
+	<field name="addressstatusids" type="int" indexed="true" stored="true" multiValued="true" />
+	<field name="addressdetails" type="text_general" indexed="true" stored="true" multiValued="true" />
+	<field name="fulladdresses" type="text_general" indexed="true" stored="true" multiValued="true" />
+
+	<field name="documentids" type="int" indexed="true" stored="true" multiValued="true" />
+	<field name="documentnames" type="text_general" indexed="true" stored="true" multiValued="true" />
+	<field name="documentcodes" type="text_general" indexed="true" stored="true" multiValued="true" />
+	<field name="documenttypeids" type="int" indexed="true" stored="true" multiValued="true" />
+	<field name="documentstorepaths" type="text_general" indexed="false" stored="true" multiValued="true" />
+	<field name="documentcreateddate" type="date" indexed="true" stored="true" multiValued="true" />
+	<field name="documentupdateddate" type="date" indexed="true" stored="true" multiValued="true" />
+
+	<uniqueKey>merchantid</uniqueKey>
+	<defaultSearchField>merchantname</defaultSearchField>
+
+	<fieldType name="string" class="solr.StrField" sortMissingLast="true" />
+	<fieldType name="boolean" class="solr.BoolField" sortMissingLast="true" />
+	<fieldType name="int" class="solr.TrieIntField" precisionStep="0" positionIncrementGap="0" />
+	<fieldType name="float" class="solr.TrieFloatField" precisionStep="0" positionIncrementGap="0" />
+	<fieldType name="long" class="solr.TrieLongField" precisionStep="0" positionIncrementGap="0" />
+	<fieldType name="double" class="solr.TrieDoubleField" precisionStep="0" positionIncrementGap="0" />
+	<fieldType name="date" class="solr.TrieDateField" precisionStep="0" positionIncrementGap="0" />
+
+	<fieldType name="text_general" class="solr.TextField" positionIncrementGap="100">
+		<analyzer type="index">
+			<tokenizer class="solr.StandardTokenizerFactory" />
+			<filter class="solr.StopFilterFactory" ignoreCase="true" words="stopwords.txt" />
+			<filter class="solr.LowerCaseFilterFactory" />
+			<filter class="solr.ASCIIFoldingFilterFactory" preserveOriginal="true" />
+		</analyzer>
+		<analyzer type="query">
+			<tokenizer class="solr.StandardTokenizerFactory" />
+			<filter class="solr.StopFilterFactory" ignoreCase="true" words="stopwords.txt" />
+			<filter class="solr.SynonymFilterFactory" synonyms="synonyms.txt" ignoreCase="true" expand="true" />
+			<filter class="solr.LowerCaseFilterFactory" />
+		</analyzer>
+	</fieldType>
+</schema>

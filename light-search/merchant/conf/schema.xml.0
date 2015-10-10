@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<schema name="frontend" version="1.5">
+   <field name="_root_" type="string" indexed="true" stored="false"/>
+   <field name="_version_" stored="true" indexed="true" type="long"/>
+   <field name="product_item_id_warehouse_id" stored="true" indexed="true" type="string" required="true" multiValued="false" />
+
+   <field name="product_id" type="int" indexed="true" stored="true" multiValued="false" />
+   <field name="product_item_group" type="string" indexed="true" stored="true" multiValued="false" docValues="true"/>
+   <field name="product_item_id" type="int" indexed="true" stored="true" multiValued="false" />
+   <!--attribute text (format:attr_[id]_txt)-->
+   <dynamicField name="*_txt" type="string"   indexed="true"  stored="true" multiValued="false"/>
+   <!--attribute number (format:attr_[id]_ds)-->
+   <dynamicField name="*_d" type="double" indexed="true"  stored="true"  multiValued="false"/>
+   <!--attribute text (format:attr_[id]_txt)-->
+   <dynamicField name="*_i"  type="int"    indexed="true"  stored="true" multiValued="false"/>
+   <!--attribute text (format:attr_active_[id]_b)-->
+   <dynamicField name="*_b"  type="boolean" indexed="true" stored="true" multiValued="false"/>
+   
+   <field name="brand_id" type="int" indexed="true" stored="true" multiValued="false"/> <!-- about to change -->
+   <field name="brand_id_facet" type="string" indexed="false" stored="true" multiValued="false" docValues="true"/>
+   <field name="brand_name" type="text_no_ascii_folding" indexed="true" stored="true" multiValued="false" />
+   
+   <field name="category_id" type="int" indexed="true" stored="true" multiValued="false"/> <!-- about to change -->
+   <field name="category_id_facet" type="string" indexed="false" stored="true" multiValued="false" docValues="true"/>
+   <field name="category_path" type="int" indexed="true" stored="true" multiValued="true" />
+   
+   <!-- đơn vị nhỏ nhất của productitem của một merchant bán hàng hàng tại một warehouse -->
+   <field name="warehouse_id" type="int" indexed="true" stored="true" multiValued="false" />
+   <field name="merchant_id" type="int" indexed="true" stored="true" multiValued="false" />
+   <field name="merchant_name" type="text_no_ascii_folding" indexed="true" stored="true" multiValued="false" />
+   <!-- đơn vị nhỏ nhất dùng làm uniqueKey -->
+   <field name="merchant_product_item_sku" type="string" indexed="true" stored="true" multiValued="false" />
+   
+   <field name="discount_percent" type="double" indexed="true" stored="true" multiValued="false" />
+   <field name="start_time_discount" type="long" indexed="true" stored="true" required="false" multiValued="false" />
+   <field name="finish_time_discount" type="long" indexed="true" stored="true" required="false" multiValued="false" />
+   <field name="barcode" type="string" indexed="true" stored="true" multiValued="false" />
+   <field name="count_sell" type="int" indexed="true" stored="true" multiValued="false" />
+   <field name="count_view" type="long" indexed="true" stored="true" multiValued="false" />
+   
+   <field name="original_price" type="double" indexed="true" stored="true" multiValued="false" />
+   <field name="sell_price" type="double" indexed="true" stored="true" multiValued="false"/>
+   <field name="product_item_name" type="text_tokenized_ascii" indexed="true" stored="true" multiValued="false" />
+   <field name="create_time" type="long" indexed="true" stored="true" multiValued="false" />
+   
+   <field name="is_hot" type="boolean" indexed="true" stored="true" multiValued="false" />
+   <field name="is_new" type="boolean" indexed="true" stored="true" multiValued="false" />
+   <field name="is_promotion" type="boolean" indexed="true" stored="true" multiValued="false" />
+   <field name="is_promotion_mapping" type="boolean" indexed="true" stored="true" multiValued="false" />
+   
+   <!-- ativate-status constraint -->
+   <field name="quantity" type="int" indexed="true" stored="true" multiValued="false" />
+   <field name="is_category_active" type="boolean" indexed="true" stored="true" multiValued="false" />
+   <field name="is_brand_active" type="boolean" indexed="true" stored="true" multiValued="false" />
+   <field name="is_merchant_active" type="boolean" indexed="true" stored="true" multiValued="false" />
+  <field name="is_warehouse_active" type="boolean" indexed="true" stored="true" multiValued="false" />
+  <field name="is_product_item_active" type="boolean" indexed="true" stored="true" multiValued="false" />
+  <field name="is_merchant_product_item_active" type="boolean" indexed="true" stored="true" multiValued="false" />
+  
+  <!-- add SafetyStock -->
+  <field name="safety_stock" type="int" indexed="true" stored="true" multiValued="false" />
+  <field name="is_safety_stock" type="boolean" indexed="true" stored="true" multiValued="false" />
+  
+  <!-- updated since 5-5-2015 -->
+  <field name="city_id" type="int" indexed="true" stored="true" multiValued="false" />
+  <field name="city_id_facet" type="string" indexed="false" stored="true" multiValued="false" docValues="true"/>
+  <field name="fresh_food_type" type="int" indexed="true" stored="true" multiValued="false" />
+  <field name="weight" type="double" indexed="true" stored="true" multiValued="false" />
+	
+  <field name="product_item_type" type="int" indexed="false" stored="true" multiValued="false" />
+  <field name="image" type="string" indexed="false" stored="true" multiValued="false" />
+  <field name="visible" type="int" indexed="true" stored="true" multiValued="true" />
+  <!-- disable false index fields -->
+   <!--field name="promotion_detail" type="string" indexed="false" stored="true" required="false" multiValued="false" /-->
+  
+ <uniqueKey>product_item_id_warehouse_id</uniqueKey>
+ 
+    <fieldType name="string" class="solr.StrField" sortMissingLast="true" />
+    <fieldType name="boolean" class="solr.BoolField" sortMissingLast="true"/>
+    <fieldType name="int" class="solr.TrieIntField" precisionStep="0" positionIncrementGap="0"/>
+    <fieldType name="float" class="solr.TrieFloatField" precisionStep="0" positionIncrementGap="0"/>
+    <fieldType name="long" class="solr.TrieLongField" precisionStep="0" positionIncrementGap="0"/>
+    <fieldType name="double" class="solr.TrieDoubleField" precisionStep="0" positionIncrementGap="0"/>
+
+    <fieldType name="text_tokenized_ascii" class="solr.TextField" positionIncrementGap="100">
+      <analyzer type="index">
+        <tokenizer class="solr.StandardTokenizerFactory"/>
+        <filter class="solr.StopFilterFactory" ignoreCase="true" words="stopwords.txt" />
+        <filter class="solr.LowerCaseFilterFactory"/>
+		<filter class="solr.ASCIIFoldingFilterFactory" preserveOriginal="true"/>
+      </analyzer>
+      <analyzer type="query">
+        <tokenizer class="solr.StandardTokenizerFactory"/>
+        <filter class="solr.StopFilterFactory" ignoreCase="true" words="stopwords.txt" />
+        <filter class="solr.SynonymFilterFactory" synonyms="synonyms.txt" ignoreCase="true" expand="true"/>
+        <filter class="solr.LowerCaseFilterFactory"/>
+      </analyzer>
+    </fieldType>
+	
+	<fieldType name="text_no_ascii_folding" class="solr.TextField" positionIncrementGap="100">
+      <analyzer>
+		<tokenizer class="solr.StandardTokenizerFactory"/>
+		<filter class="solr.LowerCaseFilterFactory"/>
+		<filter class="solr.ASCIIFoldingFilterFactory" preserveOriginal="true"/>
+	  </analyzer>
+    </fieldType>
+</schema>

@@ -1,0 +1,90 @@
+-------------------------------------------------------Thứ tự deploy-------------------------------------------------------
+Step 1:	
+	Vào thư mục chứa source code xóa 2 thư mục bin và dist
+Step 2: 
+	Vào eclipse thực hiện build lại code (Project/clean ....)
+Step 3:
+	Vào file ant light-search build_dev_vn.xml chạy deploy-remotely
+Step 4:
+	Vào server chỉnh sửa lại 7 file cấu hình
+NOTES:
+	Chú ý với các môi trường:
+		+ pre, pro, dr, pro35: các file cài đặt nằm trong thư mục /root/deploy
+		+ dev, vn: các file cài đặt nằm trong thư mục /opt/solr-5.1.0 tương ứng trên máy 10.220.75.133 và 10.220.75.81
+-------------------------------------------------------Danh sách các file cấu hình và các chỗ cần sửa-------------------------------------------------------
+@username_cm/@pass_cm:
+	pre:	Adayroi_CategoryManagement/zcsrt@F442FShxau
+	dr:		Adayroi_CategoryManagement_leader/ecVlqT1sgK2J2PO
+	pro:	Adayroi_CategoryManagement_leader/ecVlqT1sgK2J2PO
+	pro35:	Adayroi_CategoryManagement_leader/ecVlqT1sgK2J2PO
+	vn:		adruserfortest/adruserfortest@qaz
+	dev:	adruserfortest/adruserfortest@qaz
+@username_tracking/@pass_tracking:
+	pre:	Adayroi_CategoryManagement/zcsrt@F442FShxau
+	dr:		Adayroi_Tracking_leader/TWpnSp0OQoOIFgG
+	pro:	Adayroi_Tracking_leader/TWpnSp0OQoOIFgG
+	pro35:	Adayroi_Tracking_leader/TWpnSp0OQoOIFgG
+	vn:		adruserfortest/adruserfortest@qaz
+	dev:	adruserfortest/adruserfortest@qaz
+@ip/@port:
+	pre:	10.220.66.50/1433
+	dr:		10.220.66.29/1433
+	pro:	10.220.66.29/1433
+	pro35:	10.220.66.29/1433
+	vn:		10.220.75.95/1433
+	dev:	10.220.75.25/1433
+@iphazelcast
+	pre:	10.220.67.80
+	dr:		10.220.67.137
+	pro:	10.220.67.34
+	pro35:	10.220.67.35
+	vn:		10.220.75.81
+	dev:	10.220.75.133
+@name_hazelcast/@pass_hazelcast
+	pre:	adr-pre-production/Noname(02)
+	dr:		adr-dr/Noname(02)
+	pro:	adr-production/Noname(02)
+	pro35:	adr-productionNoname(02)
+	vn:		dev/dev-pass
+	dev:	dev/dev-pass
+@rabbit_pass
+	pre:	Vinecom@123
+	dr:		Vinecom@123
+	pro:	rootroot
+	pro35:	rootroot
+	vn:		admin
+	dev:	admin
+@solr:
+	pre: 	/opt/bigdata/solr
+	dr: 	/opt/bigdata/solr
+	pro: 	/opt/solr
+	pro35: 	/opt/solr
+	vn: 	/opt/solr
+	dev: 	/opt/solr
+@mario:
+	pre: 	/opt/bigdata/mario-consumer
+	dr: 	/opt/bigdata/mario-consumer
+	pro: 	/opt/mario-consumer
+	pro35: 	/opt/mario-consumer
+	vn: 	/opt/mario-consumer
+	dev: 	/opt/mario-consumer
+
+	
+LIGHT-SEARCH:
+	vi @solr/dist/big-data/conf/db.properties
+		Sửa @username, @pass, @ip, @port
+	vi @solr/dist/big-data/conf/hazelcast-client.xml
+		Sửa @iphazelcast, @name_hazelcast, @pass_hazelcast
+	vi @solr/dist/big-data/conf/hazelcast.xml
+		Sửa @iphazelcast, @name_hazelcast, @pass_hazelcast
+	vi @solr/dist/big-data/conf/system.properties
+		Sửa @username, @pass, @ip, @port
+	vi @solr/server/solr/deal/conf/db-data-config.xml
+		Sửa @username, @pass, @ip, @port
+	vi @solr/server/solr/merchant/conf/db-data-config.xml
+		Sửa @username, @pass, @ip, @port
+	vi @solr/server/solr/product/conf/db-data-config.xml
+		Sửa @username, @pass, @ip, @port
+		
+MARIO-CONSUMER 
+	

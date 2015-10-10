@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- For Deal -->
+<schema name="frontend" version="1.5">
+	<field name="_root_" type="string" indexed="true" stored="false" />
+	<field name="_version_" stored="true" indexed="true" type="long" />
+	<field name="id" stored="true" indexed="true" type="string" required="true" multiValued="false" />
+	
+	<field name="cat_id" type="int" indexed="false" stored="true" multiValued="false" />
+	<field name="cat_2_id" type="int" indexed="false" stored="true" multiValued="false" />
+	<field name="cat_path" type="int" indexed="true" stored="true" multiValued="true" />
+	<field name="cat_name" type="string" indexed="false" stored="true" multiValued="false" />
+	<field name="cat_2_name" type="string" indexed="false" stored="true" multiValued="false" />
+	<field name="rewrite_cat" type="string" indexed="false" stored="true" multiValued="false" />
+	<field name="cat_visible" type="boolean" indexed="true" stored="true" multiValued="false" />
+	<!-- used to return category leaf for front end. Format: catId_catVisible_catName -->
+	<field name="cat_facet" type="string" indexed="false" stored="true" multiValued="false" docValues="true" />
+	<field name="cat_3_facet" type="string" indexed="true" stored="true" multiValued="false" docValues="true" />
+	<field name="cat_1" type="int" indexed="true" stored="true" multiValued="false" docValues="false" />
+	
+	<field name="view_id" type="string" indexed="true" stored="true" multiValued="false" />
+	<field name="name" type="text_tokenized_ascii" indexed="true" stored="true" multiValued="false" />
+	<field name="original_price" type="int" indexed="false" stored="true" multiValued="false" />
+	<field name="sell_price" type="int" indexed="true" stored="true" multiValued="false" />
+	<field name="discount_percent" type="int" indexed="true" stored="true" multiValued="false" />
+	<field name="sold_quantity" type="int" indexed="true" stored="true" multiValued="false" />
+	<field name="type_id" type="int" indexed="false" stored="true" multiValued="false" />
+	<field name="type_name" type="string" indexed="false" stored="true" multiValued="false" />
+	<field name="rewrite_name" type="string" indexed="false" stored="true" multiValued="false" />
+	<field name="avatar" type="string" indexed="false" stored="true" multiValued="false" />
+	<field name="program_type_id" type="int" indexed="false" stored="true" multiValued="false" />
+	
+	<field name="is_domestic" type="int" indexed="true" stored="true" multiValued="true" />
+	<field name="destination_ids" type="int" indexed="true" stored="true" multiValued="true" />
+	<!-- used to return destinations for front end. Format: desId_desVisible_desmappingVisible_desName -->
+	<field name="destination_facets" type="string" indexed="false" stored="true" multiValued="true" docValues="true" />
+	
+	<field name="create_date" type="long" indexed="true" stored="true" multiValued="false" />
+	<field name="status_id" type="int" indexed="true" stored="true" multiValued="false" />
+	<field name="visible" type="boolean" indexed="true" stored="true" multiValued="false" />
+	<field name="start_date" type="long" indexed="true" stored="true" multiValued="false" />
+	<field name="end_date" type="long" indexed="true" stored="true" multiValued="false" />
+	<field name="seo_url_key" type="string" indexed="false" stored="true" multiValued="false" />
+	<field name="is_deleted_seo" type="boolean" indexed="false" stored="true" multiValued="false" />
+
+	<field name="city_ids" type="int" indexed="true" stored="true" multiValued="true" />
+	
+	<uniqueKey>id</uniqueKey>
+	<defaultSearchField>name</defaultSearchField>
+
+	<fieldType name="string" class="solr.StrField" sortMissingLast="true" />
+	<fieldType name="boolean" class="solr.BoolField" sortMissingLast="true" />
+	<fieldType name="int" class="solr.TrieIntField" precisionStep="0" positionIncrementGap="0" />
+	<fieldType name="float" class="solr.TrieFloatField" precisionStep="0" positionIncrementGap="0" />
+	<fieldType name="long" class="solr.TrieLongField" precisionStep="0" positionIncrementGap="0" />
+	<fieldType name="double" class="solr.TrieDoubleField" precisionStep="0" positionIncrementGap="0" />
+
+	<fieldType name="text_tokenized_ascii" class="solr.TextField" positionIncrementGap="100">
+		<analyzer type="index">
+			<tokenizer class="solr.StandardTokenizerFactory" />
+			<filter class="solr.StopFilterFactory" ignoreCase="true" words="stopwords.txt" />
+			<filter class="solr.ICUNormalizer2FilterFactory" name="nfkc_cf" mode="compose"/>
+			<filter class="solr.LowerCaseFilterFactory" />
+			<filter class="solr.ASCIIFoldingFilterFactory" preserveOriginal="true" />
+		</analyzer>
+		<analyzer type="query">
+			<tokenizer class="solr.StandardTokenizerFactory" />
+			<filter class="solr.StopFilterFactory" ignoreCase="true" words="stopwords.txt" />
+			<filter class="solr.ICUNormalizer2FilterFactory" name="nfkc_cf" mode="compose"/>
+			<filter class="solr.SynonymFilterFactory" synonyms="synonyms.txt" ignoreCase="true" expand="true" />
+			<filter class="solr.LowerCaseFilterFactory" />
+		</analyzer>
+	</fieldType>
+
+	<fieldType name="text_no_ascii_folding" class="solr.TextField" positionIncrementGap="100">
+		<analyzer>
+			<tokenizer class="solr.StandardTokenizerFactory" />
+			<filter class="solr.LowerCaseFilterFactory" />
+		</analyzer>
+	</fieldType>
+</schema>

@@ -1,0 +1,60 @@
+samsung galaxy,325,328
+samsung,323,328,1773
+galaxy,325,328
+apple,323,329
+mì gói,671
+laptop.*,350
+may tinh,349
+vay,30
+dam,30,678
+quan,41,81,18
+non,78,118
+nón,78,118
+man hinh,349,356
+màn hình,349,356
+chuot,378
+chuột,378
+chăn,1131,822
+gạo,684
+gao,684
+áo,1
+bơ,629,642
+táo.*,642
+hành.*,639
+xoài.*,639
+cà chua,639
+lumia,323
+ipad.*,329
+S6.*,325
+S5.*,325
+S4.*,325
+cáp.*,346
+nước hoa.*,169
+nuoc hoa.*,169
+headphone.*,374,341
+tai nghe.*,374,341
+bàn,1130,1108,1121,1185
+but chi mau,1440
+bút chì màu,1440
+vali,1296
+sofa,1110,1109
+usb,360
+gối,1133,822,823,1295
+từ điển tiếng anh,1392
+tu dien tieng anh,1392
+macbook.*,351
+đũa,871
+tivi,399
+loa,373
+lò vi sóng,898
+lo vi song,898
+den sac,999
+đèn sạc,999
+banh nuong,611
+bánh nướng,611
+đậu phộng,673,680,709
+dau phong,673,680,709
+lạc,673,680,709
+lac,673,680,709
+dao,874
+bia,713

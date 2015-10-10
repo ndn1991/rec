@@ -1,0 +1,49 @@
+<dataConfig>
+	<dataSource type="JdbcDataSource"
+		driver="com.microsoft.sqlserver.jdbc.SQLServerDriver"
+		url="jdbc:sqlserver://10.220.75.25:1433;databaseName=Adayroi_Dichvu"
+		user="adruserfortest" 
+		password="adruserfortest@qaz" />
+	
+		<document>
+		<entity name="deal" query="[Get_All_Deal]" transformer="com.vinecom.solr.dih.DealTransformer,RegexTransformer,TemplateTransformer">
+			<field column="DID" name="id" />			
+			<field column="CateID" name="cat_id" />			
+			<field column="DID_View" name="view_id" />
+			<field column="DealName" name="name" />
+			<field column="PriceOrigin" name="original_price" />
+			<field column="PriceSales" name="sell_price" />
+			<field column="DiscountPercent" name="discount_percent" />
+			<field column="QuantitySold" name="sold_quantity" />			
+			<field column="isDomestics" name="is_domestic" splitBy="," />
+			<field column="DesIds" name="destination_ids" splitBy="," />
+			<!-- used to return destinations for front end. Format: desId_desVisible_desmappingVisible_desName -->
+			<field column="DesFacets" name="destination_facets" xmlSplitString="DesFacet" />			
+			<field column="CreateDate" name="create_date" utc="7" />
+			<field column="DealStatusId" name="status_id" />
+			<field column="Visible" name="visible" />
+			<field column="StartDate" name="start_date" utc="7" />
+			<field column="EndDate" name="end_date" utc="7" />
+			
+			<entity name="category" query="[Get_All_Cat]"
+				cacheImpl="SortedMapBackedCache" cacheKey="CateID" cacheLookup="deal.CateID"
+				transformer="RegexTransformer, TemplateTransformer">
+				<field column="OriCatePath" name="cat_path" splitBy="\." />
+				<field column="CateName" name="cat_name" />
+				<field column="CatPathStatus" name="cat_visible" />
+				<!-- used to return category leaf for front end. Format: catId_catVisible_catName -->
+				<field column="cat_facet" name="cat_facet" template="${category.CateID}_${category.CatPathStatus}_${category.Sort}_${category.CateName}" />
+				<field column="Cat3" name="cat_3_facet" />
+				<field column="OriCatePath" name="cat_1" />
+			</entity>
+			
+			<field column="CityIds" name="city_ids" splitBy=","  />
+			
+			<entity name="photos"
+					query="select DID, STUFF((SELECT ':' + S.Url FROM Photos S WHERE S.DID=T.DID FOR XML PATH('')), 1, 1, '') AS Photos from Photos T group by T.DID"
+					cacheImpl="SortedMapBackedCache" cacheKey="DID" cacheLookup="deal.DID" >
+				<field column="Photos" name="avatar" />
+			</entity>
+		</entity>
+	</document>
+</dataConfig>

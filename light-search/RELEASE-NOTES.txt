@@ -1,0 +1,35 @@
+#Features
+    - FRONTEND: Currently support search the following features:
+        + search by keyword
+        + suggestion (no category classification for input keyword and no counting for the first category)
+        + filter by brand, category, merchant
+        + sort by price, view, and create time (both asc, desc)
+        + provide front-end website category tree at a specific category
+        + provide front-end website facet features for category, promotion, brand (faceting by attribute has not supported yet)
+    - CM BACKEND: developing
+    
+#Features Added (20150613)
+	- GETFILTER: 
+		+ when filter by brands, keep the brand on top.
+		+ SOLRCACHE: use solr cache for all information (brand, merchant, category).
+		  We cache the entire faceted set
+	- REFACTOR: remove some unnessesary file. Restructure some class regarding writing value to response.
+	- SPELLCHECK:
+	     + using Levenshtein distance
+	     + added copy field spell of product_item_name for spelling
+	     + check solrconfig.xml for more detail
+	- add display value of double attribute for Attribute filter    
+	- add brandShortInfor
+	- Add new_getFilter API (redefine the params for more effecient SOLR QUERY)
+	- ADD API Search_CM2 for CM backend: return group for product item ID and other params (refer to solrConfig.xml search_cm_2)
+	- CM_BACKEND API: add original parameter
+	- SOLRSCHEMA: add promotion_price, boost_score
+	
+#Features Added (20150916)	
+	- COMBO_SEARCH API: for combo detail page
+		+ input: list productIds (separated by COMMA)
+		+ output: all the product item ids that still has item and a list of serving location.
+	- COMBO_CREATION API: for RnD team to query via a list of productId and productItemId
+		+ input: all the input of normal frontendAPI PLUS a list of productIds AND/OR productItemIds (all separated by COMMA)
+		+ output: full information	
+	

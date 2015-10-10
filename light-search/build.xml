@@ -1,0 +1,118 @@
+<project name="light-search" default="deploy" xmlns:ivy="antlib:org.apache.ivy.ant">
+	<!-- some variables used -->
+	<property name="app-name">light-search</property>
+	<property name="version">1.16.9.build-934a15ab</property>
+
+	<property name="jar.name">${ant.project.name}-${version}</property>
+	<property name="lib.dir" value="lib" />
+	<property name="build.classes" value="bin" />
+	<property name="conf" value="conf" />
+	<property name="dist" value="dist/${jar.name}" />
+	<property name="build.jar" value="dist/jar" />
+
+	<property name="dist.big-data" value="${dist}/big-data" />
+	<property name="dist.conf" value="${dist.big-data}/conf" />
+	<property name="dist.product" value="${dist}/product" />
+	<property name="dist.rec" value="${dist}/rec" />
+	<property name="dist.deal" value="${dist}/deal" />
+	<property name="dist.merchant" value="${dist}/merchant" />
+	<property name="scripts" value="sbin" />
+
+	<property name="testbed-host" value="10.220.75.78" />
+	<property name="username" value="root" />
+	<property name="pass" value="rootroot" />
+	<property name="deploy-dir" value="/opt/light-searchs/${jar.name}" />
+	<property name="run-dir" value="/opt" />
+	<property name="link-name" value="light-search" />
+
+	<property name="product" value="product" />
+	<property name="deal" value="deal" />
+	<property name="rec" value="rec" />
+	<property name="merchant" value="merchant" />
+
+
+	<!-- clean cache for ivy -->
+	<target name="clean-cache" description="--> clean the ivy cache">
+		<ivy:cleancache />
+	</target>
+
+	<!-- User when ivy.xml changed -->
+	<target name="resolve" description="retreive dependencies with ivy">
+		<delete dir="${lib.dir}">
+			<include name="*.jar" />
+		</delete>
+		<ivy:settings file="ivysetting/ivysettings.xml" />
+		<ivy:retrieve />
+	</target>
+
+	<target name="report" depends="resolve" description="generates a report of dependencies">
+		<ivy:report todir="${build.classes}" />
+	</target>
+
+	<target name="clear" description="delete dist folder">
+		<delete dir="${dist}" />
+		<delete dir="${build.jar}" />
+	</target>
+
+	<target name="prep" depends="clear" description="make dirs">
+		<mkdir dir="${dist}" />
+		<mkdir dir="${dist.big-data}" />
+		<mkdir dir="${dist.conf}" />
+		<mkdir dir="${dist.product}" />
+		<mkdir dir="${dist.deal}" />
+		<mkdir dir="${dist.merchant}" />
+		<mkdir dir="${build.jar}" />
+	</target>
+
+	<target name="build" depends="prep" description="build jar file">
+		<jar jarfile="${build.jar}/${jar.name}.jar">
+			<fileset dir="${build.classes}" />
+		</jar>
+	</target>
+
+	<target name="deploy" depends="build" description="copy nessesary files to dist folder">
+		<copy todir="${dist.conf}">
+			<fileset dir="${conf}">
+				<exclude name="db" />
+			</fileset>
+		</copy>
+		<copy todir="${dist.big-data}">
+			<fileset dir="${lib.dir}">
+				<include name="*.jar" />
+			</fileset>
+		</copy>
+		<copy todir="${dist.big-data}">
+			<fileset dir="${build.jar}">
+				<include name="*.jar" />
+			</fileset>
+		</copy>
+		<copy todir="${dist}">
+			<fileset dir="${scripts}" />
+		</copy>
+
+		<copy todir="${dist.product}">
+			<fileset dir="${product}" />
+		</copy>
+		<copy todir="${dist.rec}">
+			<fileset dir="${rec}" />
+		</copy>
+		<copy todir="${dist.deal}">
+			<fileset dir="${deal}" />
+		</copy>
+		<copy todir="${dist.merchant}">
+			<fileset dir="${merchant}" />
+		</copy>
+	</target>
+
+	<target name="deploy-remotely-dev" depends="deploy">
+		<sshexec command="rm -fr ${deploy-dir};mkdir -p ${deploy-dir}" host="${testbed-host}" username="${username}" password="${pass}" trust="true" failonerror="false" />
+		<scp todir="root@${testbed-host}:${deploy-dir}" password="rootroot" trust="yes">
+			<fileset dir="${dist}">
+			</fileset>
+		</scp>
+
+		<sshexec command="chmod +x ${deploy-dir}/*.sh" host="${testbed-host}" username="${username}" password="${pass}" trust="true" failonerror="false" />
+		<sshexec command="cd ${run-dir}; ln -sfn ${deploy-dir} ${link-name}" host="${testbed-host}" username="${username}" password="${pass}" trust="true" failonerror="false" />
+	</target>
+
+</project>

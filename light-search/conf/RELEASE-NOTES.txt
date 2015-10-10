@@ -1,0 +1,37 @@
+Version release notes:
++ 1.4.3: 
+	- sửa lại config schema, không sử dụng ASCII cho câu truy vấn của API search
+	- vẫn tìm kiếm tại các kho bị xóa trong API search_cm
++ 1.4.4:
+	- Thêm từ khóa cho trending_keyword
+	- Sửa lại lỗi không tìm được với từ khóa "Cốc có nắp"
++ 1.4.5:
+	- Cung cấp thêm 2 công cụ import dữ liệu cho product
++ 1.4.6:
+	- Improve độ chính xác của suggestion
+	- cập nhật lại thư viện học máy
+		Bổ sung:
+			+ Sửa dấu
+			+ Giảm chiều
++ 1.4.9:
+	- filter merchant inactive ở cm_backend
+	- trả về thêm warehouse_id
++ 1.4.10:
+	- Convert thuộc tính trả về từ giá trị base sang giá trị display
++ 1.4.11:
+	- Boost khi index
+	- Thêm tham số safety_stock
++ 1.5.0
+	- Bỏ trending keyword
++ 1.5.1
+	- fix bug khi convert sang gía trị display
++ 1.6.0
+	- thêm chức năng filter theo city cho deal
+	- Sử dụng account cho từng db, không sử dụng chung account cho tất cả db
++ 1.7.0
+	- thêm api search_cm2
++ 1.7.1
+	- loại bỏ các từ duplicate
++ 1.7.2
+	- thay đổi thứ tự bộ Analyzer
+	- fix bộ từ điển đồng nghĩa

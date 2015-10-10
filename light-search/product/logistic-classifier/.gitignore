@@ -1,0 +1,16 @@
+/vSpecialDiacritics.dat
+/actions.dat
+/categoryIdVsCategoryName.dev
+/categoryIdVsCategoryName.dr
+/categoryIdVsCategoryName.pre
+/categoryIdVsCategoryName.pro
+/categoryIdVsCategoryName.vn
+indexer.*.dat
+*.model
+/VNEncodeMap_level1.dat
+/VNEncodeMap_level2.dat
+/VNUndiacriticMap.dat
+/vowelsAutocorrect_Level1.dat
+/vowelsAutocorrect_Level2.dat
+/vowelsAutocorrect_Level3.dat
+*.dat

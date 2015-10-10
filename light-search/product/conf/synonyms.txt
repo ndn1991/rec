@@ -1,0 +1,112 @@
+heo,lợn
+tai_nghe,headphone
+ti_vi,tivi, TV
+lạp_sườn, lạp_xưởng
+dầu,dàu
+laptop,máy_tính_xách_tay
+màn_hình_cong, curved
+lợn, heo
+ngan, vịt_xiêm
+trái, trấy, quả
+hoa, bông
+đỗ, độ, đậu
+bắp, ngô
+khóm, thơm, dứa
+lạc, đậu_phộng
+mận, roi
+táo, bôm
+táo_ta, táo
+mãng_cầu_ta, na
+mãng_cầu_xiêm, mãng_cầu_gai, na_gai
+hồng_xiêm, sa_bô_chê, sabôchê
+củ_độ, củ_đậu, củ_sắn
+khoai_mì, sắn, khoai_săn
+dưa_chuột, dưa_leo
+dọc_mùng, môn_ngọt
+mùi, rau_mùi, ngò_rí
+mùi_tàu, ngò_gai, ngò_tàu
+xì_dầu, nước_tương, tàu_vị_yểu
+mì_chính, bột_ngọt
+đậu_pha, tàu_hủ_non, tào_phớ
+nem_rán, chả_giò
+ô_mai, xí_muội
+bánh_flan, bánh_ca_ra_men, bánh_caramen
+nĩa, dĩa
+địa, đĩa, dĩa
+muỗng, thìa
+môi, vá, muôi
+bát, chén, đọi
+tô, bát_tô
+cốc, tách, ly
+lọ, chai
+trứng_vịt, hột_vịt
+hột_gà, trứng_gà
+khoai_mỳ, củ_sắn
+giò, chả
+trái, quả
+cải_cúc, tần_ô
+rau_ngổ, ngò_ôm
+rau_cần, cần_nước
+cần_tây, cần_tàu
+hạt_mè, hạt_vừng
+mộc_nhĩ, nấm_mèo
+đông_cô, nấm_hương
+cá_quả, cá_lóc, cá_tràu
+cải_thìa, cải_chíp
+chà_bông, ruốc
+bánh_tráng, bánh_đa
+bánh_ướt, bánh_mướt, bánh_cuốn
+dạ_dày, cổ_hũ, bao_tử
+khoai_môn, khoai_sọ
+củ_năng, củ_mã_thầy
+bông_cải, súp_hoa_lơ
+gỏi, nộm
+mì_vằn_thắn, mì_hoành_thánh
+thịt_xông_khói, thịt_hun_khói
+cá_kìm, cá_lìm_kìm
+cá_mú, cá_bống_mú, cá_song
+con_mùn_mũn, cá_bống_cát
+thịt_bê, thịt_me
+bì , nem_chạo
+bún_thịt_nướng, bún_nem, bún_chả
+bún_tàu, miến
+củ_hành, củ_kiệu
+nem_rán, chả_giò, chả_ram
+đông_sương, thạch, sương_sa
+quả_trứng_gà, lekima, le_ki_ma
+ớt_hiểm, ớt_chỉ_thiên
+bánh_phồng, phồng_tôm
+váng_đậu, tàu_hũ_ky
+măng_cụt, giáng_châu
+rau_rút, rau_nhút
+cải_thìa, cải_chíp
+bí_đỏ, bầu_lào, bí_ngô
+bí_xanh, bí_đao
+rau_bina, rau_chân_vịt, cải_bố_xôi, rau_nhà_chùa, rau_bó_xôi
+lá_bố, rau_đay
+táo_mèo, quả_bom
+cá_chẽm, cá_vược
+cá_he, cá_kim_sơn
+cá_sa_ba, cá_saba, cá_sapa, cá_sa_pa
+nạm_bò, gầu_bò
+cá_bạc_má, cá_thu_ấn_độ
+cá_hường, cá_mùi
+cá_thác_lác, cá_phác_lác, cá_thát_lát
+cá_róc, cá_ngân, cá_ngân_bột
+rau_cải_xanh, cải_bẹ_xanh
+cải_ngồng, cải_ngọt
+rau_ngót, rau_bầu_ngót, rau_bồ_ngót
+mướp_đắng, khổ_qua
+chuối_tây, chuối_sứ
+quất, tắc
+ngao, nghêu
+ức_gà, lườn_gà
+đông_sương, rau_câu
+chè, trà
+chè_tươi, chè_xanh, trà_xanh
+da_heo_phồng, bóng_lợn
+ba_chỉ, ba_rọi
+diềm_thăn, yếm, dải
+nạc_dăm, nạc_vai
+loreal,l'oreal
+ga,gas

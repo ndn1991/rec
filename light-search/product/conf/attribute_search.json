@@ -1,0 +1,25 @@
+[
+	{
+		"catId": 1,
+		"attributes": [
+			{
+				"id": 143,
+				"name": "màu ",
+				"weight": 0.5
+			}, {
+				"id": 248,
+				"name": "size ",
+				"weight": 0.5
+			}
+		]
+	}, {
+		"catId": 1384,
+		"attributes": [
+			{
+				"id": 171,
+				"name": "",
+				"weight": 3
+			}
+		]
+	}
+]

@@ -1,0 +1,61 @@
+<dataConfig>
+	<dataSource type="JdbcDataSource" 
+		driver="com.microsoft.sqlserver.jdbc.SQLServerDriver" 
+		url="jdbc:sqlserver://@ip:@port;databaseName=Adayroi_CategoryManagement"
+		user="@username_cm" 
+		password="@pass_cm" />
+
+	<document>
+		<entity name="deal" query="[Product_Solr_Get_All_Merchant]" transformer="com.vinecom.solr.dih.MerchantTransformer,RegexTransformer">
+			<field name="merchantid" column="Id" />
+			<field name="merchantcode" column="MerchantCode" />
+			<field name="merchantname" column="MerchantName" />
+			<field name="companyname" column="CompanyName" />
+			<field name="merchantdescription" column="MerchantDescription" />
+			<field name="merchantlogo" column="MerchantLogo" />
+			<field name="phone" column="Phone" />
+			<field name="fax" column="Fax" />
+			<field name="email" column="Email" />
+			<field name="website" column="Website" />
+			<field name="bankowner" column="BankOwner" />
+			<field name="bankname" column="BankName" />
+			<field name="bankbranch" column="BankBranch" />
+			<field name="taxcode" column="TaxCode" />
+			<field name="merchantstatus" column="MerchantStatus" />
+			<field name="updateddate" column="UpdatedDate" />
+			<field name="createddate" column="CreatedDate" />
+			<field name="userid" column="UserId" />
+			<field name="createduserid" column="CreatedUserId" />
+			<field name="updateduserid" column="UpdatedUserId" />
+			<field name="merchanttype" column="MerchantType" />
+			<field name="unfullfilled" column="MerchantType" />
+			<field name="noteadmin" column="NoteAdmin" />
+			<field name="returnpolicy" column="ReturnPolicy" />
+			<field name="banknumber" column="BankNumber" />
+			<field name="merchantgroupmember" column="GroupMember" />
+
+			<field name="merchantcontactids" column="MerchantContactIds" splitBy="," />
+			<field name="contactnames" column="ContactNames" xmlSplitString="ContactName" />
+			<field name="contacttype" column="ContactTypes" splitBy="," />
+			<field name="emailcontact" column="EmailContacts" xmlSplitString="Email" />
+
+			<field name="merchantaddressids" column="MerchantAddressIds" splitBy="," />
+			<field name="addressids" column="AddressIds" splitBy="," />
+			<field name="provinids" column="ProvinceIds" splitBy="," />
+			<field name="districtids" column="DistrictIds" splitBy="," />
+			<field name="villageids" column="VillageIds" splitBy="," />
+			<field name="roadids" column="RoadIds" splitBy="," />
+			<field name="addresstypes" column="AddressTypes" splitBy="," />
+			<field name="addressstatusids" column="AddressStatuses" splitBy="," />
+			<field name="addressdetails" column="AddressDetails" xmlSplitString="AddressDetail" />
+			<field name="fulladdresses" column="FullAddresss" xmlSplitString="FullAddress" />
+
+			<field name="documentids" column="DocumentIds" splitBy="," />
+			<field name="documentnames" column="DocumentNames" xmlSplitString="DocumentName" />
+			<field name="documentcodes" column="DocumentCodes" xmlSplitString="DocumentCode" />
+			<field name="documenttypeids" column="DocumentTypeIds" splitBy="," />
+			<field name="documentcreateddate" column="DocumentCreatedDates" xmlSplitDate="CreatedDate"/>
+			<field name="documentupdateddate" column="DocumentUpdatedDates" xmlSplitDate="UpdatedDate" />
+		</entity>
+	</document>
+</dataConfig>

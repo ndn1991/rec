@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- For Deal -->
+<schema name="frontend" version="1.5">
+	<field name="_root_" type="string" indexed="true" stored="false" />
+	<field name="_version_" stored="true" indexed="true" type="long" />
+	<field name="product_id" stored="true" indexed="true" type="string" required="true" multiValued="false" />	
+	<field name="recs" stored="true" indexed="true" type="string" required="true" multiValued="true" />	
+	<field name="type" stored="true" indexed="true" type="string" required="true" multiValued="false" />
+	<uniqueKey>product_id</uniqueKey>
+
+	<fieldType name="string" class="solr.StrField" sortMissingLast="true" />
+	<fieldType name="boolean" class="solr.BoolField" sortMissingLast="true" />
+	<fieldType name="int" class="solr.TrieIntField" precisionStep="0" positionIncrementGap="0" />
+	<fieldType name="float" class="solr.TrieFloatField" precisionStep="0" positionIncrementGap="0" />
+	<fieldType name="long" class="solr.TrieLongField" precisionStep="0" positionIncrementGap="0" />
+	<fieldType name="double" class="solr.TrieDoubleField" precisionStep="0" positionIncrementGap="0" />
+
+	<fieldType name="text_tokenized_ascii" class="solr.TextField" positionIncrementGap="100">
+		<analyzer type="index">
+			<tokenizer class="solr.StandardTokenizerFactory" />
+			<filter class="solr.StopFilterFactory" ignoreCase="true" words="stopwords.txt" />
+			<filter class="solr.ICUNormalizer2FilterFactory" name="nfkc_cf" mode="compose"/>
+			<filter class="solr.LowerCaseFilterFactory" />
+			<filter class="solr.ASCIIFoldingFilterFactory" preserveOriginal="true" />
+		</analyzer>
+		<analyzer type="query">
+			<tokenizer class="solr.StandardTokenizerFactory" />
+			<filter class="solr.StopFilterFactory" ignoreCase="true" words="stopwords.txt" />
+			<filter class="solr.ICUNormalizer2FilterFactory" name="nfkc_cf" mode="compose"/>
+			<filter class="solr.SynonymFilterFactory" synonyms="synonyms.txt" ignoreCase="true" expand="true" />
+			<filter class="solr.LowerCaseFilterFactory" />
+		</analyzer>
+	</fieldType>
+
+	<fieldType name="text_no_ascii_folding" class="solr.TextField" positionIncrementGap="100">
+		<analyzer>
+			<tokenizer class="solr.StandardTokenizerFactory" />
+			<filter class="solr.LowerCaseFilterFactory" />
+		</analyzer>
+	</fieldType>
+</schema>

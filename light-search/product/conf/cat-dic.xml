@@ -1,0 +1,697 @@
+<vinecom>
+	<categoryDictionary>
+		<w>sách chuyên ngành</w>
+		<w>bể bơi</w>
+		<w>máy đo</w>
+		<w>hút khói</w>
+		<w>ép nhựa</w>
+		<w>dây vòi</w>
+		<w>chuyên nghiệp</w>
+		<w>đĩa nhạc</w>
+		<w>dân ca</w>
+		<w>ổ khoá</w>
+		<w>dép</w>
+		<w>kính mắt</w>
+		<w>bắn đinh</w>
+		<w>laptop</w>
+		<w>bút mực</w>
+		<w>áo choàng</w>
+		<w>hoá chất</w>
+		<w>bút màu</w>
+		<w>máy sấy tóc</w>
+		<w>tai nghe</w>
+		<w>dây nối</w>
+		<w>máy tính</w>
+		<w>quần tất</w>
+		<w>lót nữ</w>
+		<w>túi ngủ</w>
+		<w>ba lô</w>
+		<w>mỹ phẩm</w>
+		<w>dụng cụ</w>
+		<w>kính mát</w>
+		<w>in kim</w>
+		<w>điện tử</w>
+		<w>cầm tay</w>
+		<w>an ninh</w>
+		<w>kính bảo hộ</w>
+		<w>huyết áp</w>
+		<w>sữa nước</w>
+		<w>nhập khẩu</w>
+		<w>đặc sản</w>
+		<w>tủ đông</w>
+		<w>cờ tướng</w>
+		<w>máy ép trái cây</w>
+		<w>tủ chống ẩm</w>
+		<w>truyền thống</w>
+		<w>bút lông</w>
+		<w>từ điển</w>
+		<w>ván trượt</w>
+		<w>bồn cầu</w>
+		<w>mũ bảo hiểm</w>
+		<w>móc áo</w>
+		<w>chuồng thú</w>
+		<w>máy đếm tiền</w>
+		<w>dưỡng tóc</w>
+		<w>đa chức năng</w>
+		<w>trở lên</w>
+		<w>nguy hiểm</w>
+		<w>chảo điện</w>
+		<w>máy xay</w>
+		<w>thời trang</w>
+		<w>bao tay</w>
+		<w>ống đồng</w>
+		<w>bút máy</w>
+		<w>sữa tươi</w>
+		<w>cân sức khỏe</w>
+		<w>kính thể thao</w>
+		<w>kính lọc</w>
+		<w>dung dịch</w>
+		<w>tiểu học</w>
+		<w>quạt treo tường</w>
+		<w>giám sát</w>
+		<w>khăn tắm</w>
+		<w>smart watch</w>
+		<w>quà tặng</w>
+		<w>tổng đài</w>
+		<w>bình tưới</w>
+		<w>bánh chưng</w>
+		<w>rửa mặt</w>
+		<w>cắn răng</w>
+		<w>kỹ năng sống</w>
+		<w>tổng hợp</w>
+		<w>áo mưa</w>
+		<w>nem chua</w>
+		<w>nhà bếp</w>
+		<w>trình chiếu</w>
+		<w>linh kiện</w>
+		<w>máy bơm nước</w>
+		<w>áo phông</w>
+		<w>thước cuộn</w>
+		<w>chân đế</w>
+		<w>sơ mi</w>
+		<w>hình sự</w>
+		<w>áo hai dây</w>
+		<w>phong thuỷ</w>
+		<w>áo thun</w>
+		<w>hư tổn</w>
+		<w>dây nguồn</w>
+		<w>thịt đông lạnh</w>
+		<w>tổ yến</w>
+		<w>máy hàn</w>
+		<w>cách mạng</w>
+		<w>giải độc</w>
+		<w>điều hòa</w>
+		<w>không khí</w>
+		<w>thức ăn</w>
+		<w>áo ba lỗ</w>
+		<w>phụ gia</w>
+		<w>tàn nhang</w>
+		<w>bút chì</w>
+		<w>tẩy lông</w>
+		<w>bột giặt</w>
+		<w>nước rửa kính</w>
+		<w>bánh kẹo</w>
+		<w>tình cảm</w>
+		<w>giày dép</w>
+		<w>usb 3g</w>
+		<w>thắt lưng</w>
+		<w>máy tính để bàn</w>
+		<w>bài tập</w>
+		<w>tinh dầu</w>
+		<w>bàn phím</w>
+		<w>kẹo cao su</w>
+		<w>kéo dài</w>
+		<w>thực phẩm</w>
+		<w>khăn giấy</w>
+		<w>gia vị</w>
+		<w>ngũ cốc</w>
+		<w>lông mi giả</w>
+		<w>gạc sữa</w>
+		<w>bàn chải</w>
+		<w>tài liệu</w>
+		<w>nhiệt độ</w>
+		<w>nước chấm</w>
+		<w>má hồng</w>
+		<w>xà kép</w>
+		<w>chiều cao</w>
+		<w>chăm sóc mặt</w>
+		<w>giày đi bộ</w>
+		<w>bạt phủ xe</w>
+		<w>bóng bàn</w>
+		<w>găng tay</w>
+		<w>di chuột</w>
+		<w>đồ nhựa</w>
+		<w>sinh tố</w>
+		<w>giày sneakers</w>
+		<w>áo len</w>
+		<w>kiến thức</w>
+		<w>thẻ cào</w>
+		<w>bánh mỳ</w>
+		<w>thước đo</w>
+		<w>tã giấy</w>
+		<w>bếp điện</w>
+		<w>rượu bia</w>
+		<w>lốp xe</w>
+		<w>máy ảnh</w>
+		<w>đo ường huyết</w>
+		<w>quạt bàn</w>
+		<w>máy hút bụi</w>
+		<w>truyện tranh</w>
+		<w>đèn pin</w>
+		<w>bao cao su</w>
+		<w>màn chiếu</w>
+		<w>hành trình</w>
+		<w>máy chấm công</w>
+		<w>phấn thơm</w>
+		<w>nâng đỡ</w>
+		<w>võ thuật</w>
+		<w>cờ vua</w>
+		<w>cung cấp</w>
+		<w>thịt khô</w>
+		<w>kim loại</w>
+		<w>máy in</w>
+		<w>máy sấy</w>
+		<w>bình thuỷ điện</w>
+		<w>tình dục</w>
+		<w>quạt cây</w>
+		<w>ruột gối</w>
+		<w>nút tai</w>
+		<w>chim cút</w>
+		<w>máy chơi game</w>
+		<w>áo phao</w>
+		<w>cầu lông</w>
+		<w>cố định</w>
+		<w>súng dán keo</w>
+		<w>12 tháng</w>
+		<w>mực máy in</w>
+		<w>máy khoan</w>
+		<w>phục hồi</w>
+		<w>đầm dạo phố</w>
+		<w>vật dụng</w>
+		<w>băng đĩa</w>
+		<w>nhiệt kế</w>
+		<w>vận chuyển</w>
+		<w>xe kéo</w>
+		<w>tế bào chết</w>
+		<w>mặt nạ</w>
+		<w>trí tuệ</w>
+		<w>hóa phẩm</w>
+		<w>thông minh</w>
+		<w>làm vườn</w>
+		<w>trí nhớ</w>
+		<w>máy in laser</w>
+		<w>bảo hộ</w>
+		<w>mãn kinh</w>
+		<w>lọc nước</w>
+		<w>giải mã</w>
+		<w>máy cắt cỏ</w>
+		<w>bảo hành</w>
+		<w>giấy cuộn</w>
+		<w>giá treo</w>
+		<w>nồi niêu</w>
+		<w>bánh mềm</w>
+		<w>bình sữa</w>
+		<w>băng keo</w>
+		<w>đậu hũ</w>
+		<w>ăn kiêng</w>
+		<w>rạn nứt</w>
+		<w>tập thể</w>
+		<w>bộ vi xử lý</w>
+		<w>quần âu</w>
+		<w>máy lọc nước</w>
+		<w>vỉ nướng</w>
+		<w>điều hoà</w>
+		<w>vệ sinh</w>
+		<w>nhà cửa</w>
+		<w>bàn ghế</w>
+		<w>đai đeo</w>
+		<w>chắn nắng</w>
+		<w>leo núi</w>
+		<w>trưng bày</w>
+		<w>thử thai</w>
+		<w>đánh bóng</w>
+		<w>áo bầu</w>
+		<w>chăm sóc tóc</w>
+		<w>phim việt nam</w>
+		<w>áo quần</w>
+		<w>khử mùi</w>
+		<w>máy đọc sách</w>
+		<w>văn phòng phẩm</w>
+		<w>để bàn</w>
+		<w>vỏ gối</w>
+		<w>du lịch</w>
+		<w>chạy điện</w>
+		<w>hai dây</w>
+		<w>áo polo</w>
+		<w>quần áo</w>
+		<w>lắp ráp</w>
+		<w>đời sống</w>
+		<w>sọt nhựa</w>
+		<w>xe nôi</w>
+		<w>ô mai</w>
+		<w>trái cây</w>
+		<w>bút chuyên dụng</w>
+		<w>giáo dục</w>
+		<w>camera</w>
+		<w>quần lót</w>
+		<w>kẹo cứng</w>
+		<w>máy tính</w>
+		<w>cải lương</w>
+		<w>phấn nền</w>
+		<w>nước hoa</w>
+		<w>thùng đá</w>
+		<w>bo mạch chủ</w>
+		<w>xe đạp</w>
+		<w>sữa tắm</w>
+		<w>hộp bút</w>
+		<w>túi xách</w>
+		<w>bảng viết</w>
+		<w>nóng lạnh</w>
+		<w>bộ chuyển đổi</w>
+		<w>thẻ nhớ</w>
+		<w>tủ lạnh</w>
+		<w>chăm sóc</w>
+		<w>phần mềm</w>
+		<w>giấy in</w>
+		<w>chú ý</w>
+		<w>bình sơn</w>
+		<w>con đội</w>
+		<w>máy scan</w>
+		<w>bút bi</w>
+		<w>gia đình</w>
+		<w>tiệt trùng</w>
+		<w>cà phê</w>
+		<w>tập vở</w>
+		<w>nồi cơm điện</w>
+		<w>trang điểm</w>
+		<w>trà thảo dược</w>
+		<w>đèn ngủ</w>
+		<w>hít kính</w>
+		<w>nước ngọt</w>
+		<w>sổ tay</w>
+		<w>văn học</w>
+		<w>sửa chữa</w>
+		<w>thiết bị</w>
+		<w>điều hòa</w>
+		<w>bút cảm ứng</w>
+		<w>vòng cổ</w>
+		<w>thời kỳ</w>
+		<w>all in one</w>
+		<w>khóa chống trộm</w>
+		<w>di động</w>
+		<w>máy ghi âm</w>
+		<w>tủ áo</w>
+		<w>đồ lót nam</w>
+		<w>tuốc nơ vít</w>
+		<w>trẻ em</w>
+		<w>card màn hình</w>
+		<w>chân váy</w>
+		<w>ghế bar</w>
+		<w>hải sản</w>
+		<w>máy bơm</w>
+		<w>phim hoạt hình</w>
+		<w>đồng hồ</w>
+		<w>dây kéo</w>
+		<w>ăn liền</w>
+		<w>trang phục</w>
+		<w>xông khói</w>
+		<w>dao cạo</w>
+		<w>máy tập</w>
+		<w>phổ thông</w>
+		<w>đồ hộp</w>
+		<w>âm thanh</w>
+		<w>chữa cháy</w>
+		<w>muối tắm</w>
+		<w>tranh phong</w>
+		<w>quạt thông gió</w>
+		<w>vuông góc</w>
+		<w>máy xay cà phê</w>
+		<w>phồng tôm</w>
+		<w>sức khoẻ</w>
+		<w>ống nhòm</w>
+		<w>sắc đẹp</w>
+		<w>bàn ăn</w>
+		<w>hòa tấu</w>
+		<w>ghế bành</w>
+		<w>ngoại ngữ</w>
+		<w>bánh cứng</w>
+		<w>đồ ăn</w>
+		<w>ô tô</w>
+		<w>áo lót</w>
+		<w>giày mọi</w>
+		<w>kem nền</w>
+		<w>ghế nhựa</w>
+		<w>vô lăng</w>
+		<w>côn trùng</w>
+		<w>kinh dị</w>
+		<w>gia dụng</w>
+		<w>bình giữ nhiệt</w>
+		<w>mật ong</w>
+		<w>máy fax</w>
+		<w>máy chủ</w>
+		<w>sữa ong chúa</w>
+		<w>điện dân dụng</w>
+		<w>băng vệ sinh</w>
+		<w>kem đánh răng</w>
+		<w>chức năng</w>
+		<w>mỏ lết</w>
+		<w>bông gòn</w>
+		<w>kiếm hiệp</w>
+		<w>ghế khởi động</w>
+		<w>biển báo</w>
+		<w>sách giáo khoa</w>
+		<w>khay cắm bút</w>
+		<w>ăn uống</w>
+		<w>giấy ướt</w>
+		<w>làm bánh</w>
+		<w>y tế</w>
+		<w>công sở</w>
+		<w>giải khát</w>
+		<w>nồi hầm</w>
+		<w>bảo hộ</w>
+		<w>điện lạnh</w>
+		<w>máy móc</w>
+		<w>màu nước</w>
+		<w>bình uống nước</w>
+		<w>điều trị</w>
+		<w>bút xóa</w>
+		<w>đặc trị tóc</w>
+		<w>lư đồng</w>
+		<w>mô tô</w>
+		<w>máy phát điện</w>
+		<w>sữa rửa mặt</w>
+		<w>ổ cắm</w>
+		<w>giặt ủi</w>
+		<w>phụ tùng</w>
+		<w>đĩa quang</w>
+		<w>bóng chuyền</w>
+		<w>ruột bút bi</w>
+		<w>máy nghe nhạc</w>
+		<w>kính bơi</w>
+		<w>sức khỏe</w>
+		<w>tẩy trang</w>
+		<w>linh chi</w>
+		<w>khắc chữ</w>
+		<w>mực máy fax</w>
+		<w>thước kẻ</w>
+		<w>cách điện</w>
+		<w>tiền chiến</w>
+		<w>máy quay phim</w>
+		<w>máy quay</w>
+		<w>bạt che nắng</w>
+		<w>bổ sung</w>
+		<w>giả tưởng</w>
+		<w>mùa đông</w>
+		<w>hành động</w>
+		<w>cổ tay</w>
+		<w>phim tâm lý</w>
+		<w>ngoại thất</w>
+		<w>phòng tắm</w>
+		<w>bình nước</w>
+		<w>xà đơn</w>
+		<w>miếng dán</w>
+		<w>máy cưa</w>
+		<w>máy hút khói</w>
+		<w>bút sơn</w>
+		<w>giải độc gan</w>
+		<w>dầu mỡ</w>
+		<w>bánh tét</w>
+		<w>túi du lịch</w>
+		<w>nội địa</w>
+		<w>khung ảnh</w>
+		<w>thảo dược</w>
+		<w>dép nam</w>
+		<w>máy mài</w>
+		<w>bao da</w>
+		<w>nhuộm tóc</w>
+		<w>sim điện thoại</w>
+		<w>siêu tốc</w>
+		<w>mái chèo</w>
+		<w>xe tay ga</w>
+		<w>bơi lội</w>
+		<w>dầu ăn</w>
+		<w>nước hoa hồng</w>
+		<w>cơ khí</w>
+		<w>máy nước nóng</w>
+		<w>bôi trơn</w>
+		<w>ròng rọc</w>
+		<w>búp bê</w>
+		<w>đông lạnh</w>
+		<w>bánh đa</w>
+		<w>xe đẩy</w>
+		<w>gạt mưa</w>
+		<w>sữa chua</w>
+		<w>nước rửa tay</w>
+		<w>máy chiên</w>
+		<w>bút viết</w>
+		<w>áo crop</w>
+		<w>nước ngoài</w>
+		<w>đa năng</w>
+		<w>lò nướng</w>
+		<w>chăm sóc da</w>
+		<w>cà vạt</w>
+		<w>cờ lê</w>
+		<w>vật phẩm</w>
+		<w>bộ đồ</w>
+		<w>thư giãn</w>
+		<w>phô mai</w>
+		<w>trữ tình</w>
+		<w>vòi sen</w>
+		<w>dầu gội</w>
+		<w>đế tản nhiệt</w>
+		<w>xăng đan</w>
+		<w>hệ điều hành</w>
+		<w>bóng đá</w>
+		<w>phụ kiện</w>
+		<w>bình đá</w>
+		<w>nhà tắm</w>
+		<w>dân tộc</w>
+		<w>thảm sàn</w>
+		<w>tấm trải lều</w>
+		<w>khoa học</w>
+		<w>kỹ thuật số</w>
+		<w>hệ miễn dịch</w>
+		<w>đầu cd</w>
+		<w>âu phục</w>
+		<w>kem lót</w>
+		<w>ghế dài</w>
+		<w>quay phim</w>
+		<w>thiết bị mạng</w>
+		<w>dạ quang</w>
+		<w>bánh mì</w>
+		<w>nước rửa</w>
+		<w>ổ cứng</w>
+		<w>không khí</w>
+		<w>nước xả</w>
+		<w>cơ thể</w>
+		<w>thâm quầng</w>
+		<w>bánh ngọt</w>
+		<w>sản phẩm</w>
+		<w>thi đấu</w>
+		<w>đồ bộ</w>
+		<w>vui chơi</w>
+		<w>đèn thăng hương</w>
+		<w>kem cạo râu</w>
+		<w>quạt trần</w>
+		<w>dưỡng da</w>
+		<w>phao cứu sinh</w>
+		<w>máy bắt vít</w>
+		<w>nồi lẩu điện</w>
+		<w>thức uống</w>
+		<w>đĩa giấy</w>
+		<w>lò vi sóng</w>
+		<w>trịnh công sơn</w>
+		<w>băng dán</w>
+		<w>chất tẩy</w>
+		<w>kem chống nắng</w>
+		<w>nước súc miệng</w>
+		<w>kính viễn vọng</w>
+		<w>phòng ăn</w>
+		<w>dây lưng</w>
+		<w>xà beng</w>
+		<w>hoa tai</w>
+		<w>que hàn</w>
+		<w>thể loại</w>
+		<w>máy giặt</w>
+		<w>dinh dưỡng</w>
+		<w>máy in phun</w>
+		<w>trợ giảng</w>
+		<w>cao dán</w>
+		<w>tẩy trang</w>
+		<w>nhạy cảm</w>
+		<w>dự phòng</w>
+		<w>xà phòng tắm</w>
+		<w>tập luyện</w>
+		<w>thau tắm</w>
+		<w>ủ tóc</w>
+		<w>bảo quản</w>
+		<w>thần thoại</w>
+		<w>độ cao</w>
+		<w>trò chơi</w>
+		<w>mẫu giáo</w>
+		<w>độ ẩm</w>
+		<w>bình châm nhớt</w>
+		<w>khẩu trang</w>
+		<w>sữa bột</w>
+		<w>hình ảnh</w>
+		<w>nhạc trẻ</w>
+		<w>bình lọc nước</w>
+		<w>dầu thơm</w>
+		<w>học tập</w>
+		<w>hà nội</w>
+		<w>oxy hoá</w>
+		<w>sơ sinh</w>
+		<w>máy may</w>
+		<w>sào cắt điện</w>
+		<w>nông sản</w>
+		<w>nội thất</w>
+		<w>ví nữ</w>
+		<w>thú cưng</w>
+		<w>ấm đun nước</w>
+		<w>khay hồ sơ</w>
+		<w>tín hiệu</w>
+		<w>dã ngoại</w>
+		<w>thước dây</w>
+		<w>khoảng cách</w>
+		<w>trang phục golf</w>
+		<w>kim khí</w>
+		<w>đèn thờ</w>
+		<w>bàn văn phòng</w>
+		<w>khăn mặt</w>
+		<w>trang sức</w>
+		<w>bóng rổ</w>
+		<w>ứng dụng</w>
+		<w>đốm nâu</w>
+		<w>kính hàn</w>
+		<w>bánh tráng</w>
+		<w>lưu niệm</w>
+		<w>dầu xả</w>
+		<w>lúc lắc</w>
+		<w>dầu nhớt</w>
+		<w>đầu đọc thẻ</w>
+		<w>sáng tạo</w>
+		<w>thịt nguội</w>
+		<w>dạ tiệc</w>
+		<w>bút doanh nhân</w>
+		<w>sữa đậu nành</w>
+		<w>rò rỉ</w>
+		<w>tăm bông</w>
+		<w>tủ thờ</w>
+		<w>thể hình</w>
+		<w>nón bơi</w>
+		<w>nước tẩy</w>
+		<w>tự động</w>
+		<w>gia cầm</w>
+		<w>bán chuyên</w>
+		<w>văn phòng</w>
+		<w>vấn đề</w>
+		<w>súng phun sơn</w>
+		<w>xe máy</w>
+		<w>giày cao gót</w>
+		<w>giày tây</w>
+		<w>đồ ngủ</w>
+		<w>lão hoá</w>
+		<w>nồi áp suất</w>
+		<w>trang trí</w>
+		<w>cài đặt</w>
+		<w>dầu cá</w>
+		<w>vòi xịt</w>
+		<w>đồ chơi</w>
+		<w>bàn là</w>
+		<w>cao su</w>
+		<w>ba rọi</w>
+		<w>bổ dưỡng</w>
+		<w>âm nhạc</w>
+		<w>dăm bông</w>
+		<w>đầu đĩa</w>
+		<w>cờ vây</w>
+		<w>toàn thân</w>
+		<w>công nghệ</w>
+		<w>mầm non</w>
+		<w>hồ bơi</w>
+		<w>làm đẹp</w>
+		<w>xúc xích</w>
+		<w>bộ nhớ trong</w>
+		<w>quang học</w>
+		<w>thiết bị điện</w>
+		<w>màn hình</w>
+		<w>máy tính bảng</w>
+		<w>đèn flash</w>
+		<w>dầu gió</w>
+		<w>xe mô hình</w>
+		<w>ống kính</w>
+		<w>áo khoác</w>
+		<w>vi xử lý</w>
+		<w>đầm bầu</w>
+		<w>hơi nước</w>
+		<w>thước kẹp</w>
+		<w>đệm ngồi</w>
+		<w>ngoài trời</w>
+		<w>hương liệu</w>
+		<w>chế biến</w>
+		<w>cây nước</w>
+		<w>phòng ngủ</w>
+		<w>tẩy rửa</w>
+		<w>sử dụng</w>
+		<w>đường huyết</w>
+		<w>kẹo mềm</w>
+		<w>đóng hộp</w>
+		<w>nhạc lý</w>
+		<w>thiếu nhi</w>
+		<w>da mặt</w>
+		<w>phong thủy</w>
+		<w>thẻ game</w>
+		<w>cây lau nhà</w>
+		<w>máy hấp</w>
+		<w>di động</w>
+		<w>phụ nữ</w>
+		<w>bập bênh</w>
+		<w>bim bim</w>
+		<w>miếng dán màn hình</w>
+		<w>an toàn</w>
+		<w>điều chỉnh</w>
+		<w>dây băng</w>
+		<w>hoá mỹ phẩm</w>
+		<w>cần lái</w>
+		<w>thờ cúng</w>
+		<w>nước giặt</w>
+		<w>đèn xông hương</w>
+		<w>lão hóa</w>
+		<w>sáp thơm</w>
+		<w>kỹ thuật</w>
+		<w>treo đồ</w>
+		<w>giày</w>
+		<w>xe đạp điện</w>
+		<w>lót nồi</w>
+		<w>thuê bao</w>
+		<w>chống trộm</w>
+		<w>kẻ mắt</w>
+		<w>kính thiên văn</w>
+		<w>tiểu thuyết</w>
+		<w>vòng tay</w>
+		<w>hồ sơ</w>
+		<w>điện máy</w>
+		<w>lưu điện</w>
+		<w>cọ rữa</w>
+		<w>đồ dùng</w>
+		<w>nước mặn</w>
+		<w>kẻ chân mày</w>
+		<w>hỗ trợ</w>
+		<w>nước rửa chén</w>
+		<w>thùng nhựa</w>
+		<w>giải trí</w>
+		<w>cứu sinh</w>
+		<w>bình đun trà</w>
+		<w>bút dạ</w>
+		<w>phòng khách</w>
+		<w>cân bằng</w>
+		<w>kinh tế</w>
+		<w>la bàn</w>
+		<w>khăn choàng</w>
+		<w>xe hơi</w>
+		<w>cá nhân</w>
+		<w>bồn tắm</w>
+		<w>chỉ nha khoa</w>
+		<w>thể thao</w>
+	</categoryDictionary>
+</vinecom>
