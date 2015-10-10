@@ -1,0 +1,24 @@
+<ivy-module version="2.0">
+	<info organisation="org.apache" module="import-data" />
+	<configurations defaultconfmapping="default">
+		<conf name="default" />
+		<conf name="java7" extends="default" description="Java 7 dependencies" />
+		<conf name="eclipse" description="Special dependencies in Eclipse" />
+		<conf name="utest" extends="eclipse" description="Unit testing dependencies" />
+		<conf name="lib"></conf>
+        <conf name="spark-lib"></conf>
+	</configurations>
+
+	<dependencies>
+		<dependency org="org.slf4j" name="slf4j-api" rev="1.7.10" />
+		<dependency org="org.apache.logging.log4j" name="log4j-core" rev="2.1"/>
+		<dependency org="org.apache.logging.log4j" name="log4j-api" rev="2.1"/>
+		<dependency org="org.apache.logging.log4j" name="log4j-slf4j-impl" rev="2.1"/>
+		<dependency org="net.minidev" name="json-smart" rev="2.2"/>
+		
+		<dependency org="org.apache.solr" name="solr-solrj" rev="5.1.0"/>
+		
+		
+	</dependencies>
+
+</ivy-module>

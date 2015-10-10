@@ -1,0 +1,8 @@
+# Features
+  - Version 1.0.0
+    - Sử dụng ItemBase với độ đo *cosine* để recommend item2item với dữ liệu order
+  - Version 1.1.0
+    - Bổ sung dữ liệu view
+  - Version 1.2.0
+    - Ghi du lieu ra file trung gian
+# Bugs fixed

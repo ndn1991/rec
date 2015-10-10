@@ -1,0 +1,48 @@
+<project name="vin-common" default="deploy" xmlns:ivy="antlib:org.apache.ivy.ant">
+
+	<property file="build.properties" />
+	<property name="version">1.0.0</property>
+	<property name="jar.name">${ant.project.name}-${version}</property>
+	<property name="lib" value="lib" />
+	<property name="classes" value="bin" />
+	<property name="conf" value="conf" />
+	<property name="dist" value="dist" />
+
+	<!-- clean cache for ivy -->
+	<target name="clean-cache" description="--> clean the ivy cache">
+		<ivy:cleancache />
+	</target>
+
+	<!-- User when ivy.xml changed -->
+	<target name="resolve" description="retreive dependencies with ivy">
+		<delete dir="${lib}">
+			<include name="*.jar" />
+			<exclude name="sqljdbc*.jar" />
+		</delete>
+		<ivy:retrieve />
+	</target>
+
+	<target name="report" depends="resolve" description="generates a report of dependencies">
+		<ivy:report todir="${build.classes}" />
+	</target>
+
+	<target name="clear" description="delete dist folder">
+		<delete dir="${dist}" />
+	</target>
+
+	<target name="prep" depends="clear" description="make dirs">
+		<mkdir dir="${dist}" />
+	</target>
+
+	<target name="build" depends="prep" description="build jar file">
+		<jar jarfile="${dist}/${jar.name}.jar">
+			<fileset dir="${classes}" />
+		</jar>
+	</target>
+
+	<target name="deploy" depends="build">
+		<copydir src="${lib}" dest="${dist}"></copydir>
+		<copydir src="${dist}" dest="../VinRecommendation/lib"></copydir>
+	</target>
+
+</project>

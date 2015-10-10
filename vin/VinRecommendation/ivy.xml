@@ -1,0 +1,20 @@
+<ivy-module version="2.0">
+	<info organisation="org.apache" module="vin-recommend" />
+	<configurations defaultconfmapping="default">
+		<conf name="default" />
+		<conf name="java7" extends="default" description="Java 7 dependencies" />
+		<conf name="eclipse" description="Special dependencies in Eclipse" />
+		<conf name="utest" extends="eclipse" description="Unit testing dependencies" />
+		<conf name="lib"></conf>
+        <conf name="spark-lib"></conf>
+	</configurations>
+
+	<dependencies>
+		<dependency org="org.apache.spark" name="spark-core_2.10" rev="1.5.0" conf="spark-lib->default"/>
+        <dependency org="org.apache.spark" name="spark-mllib_2.10" rev="1.5.0" conf="spark-lib->default"/>
+        <!-- <dependency org="org.scala-lang" name="scala-library" rev="2.10.5" conf="lib->default"/> -->
+		<!-- <dependency org="org.scala-lang.modules" name="scala-parser-combinators_2.10" rev="1.0.4" conf="lib->default"/> -->
+		
+	</dependencies>
+
+</ivy-module>
